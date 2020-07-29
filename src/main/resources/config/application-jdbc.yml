@@ -1,0 +1,42 @@
+#######################jdbc配置#######################
+spring:
+  datasource:
+    #######################常规配置#######################
+#    #数据库连接
+#    url: jdbc:mysql://47.112.111.1:3306/timesheet?useSSL=false&useUnicode=true&characterEncoding=utf8&autoReconnect=true&rewriteBatchedStatements=true&serverTimezone=Asia/Shanghai
+#    #数据库用户名
+#    username: yuancheng
+#    #数据库密码
+#    password: Chuangji2019?
+
+    #数据库连接
+    url: jdbc:mysql://localhost:3306/hello?useSSL=false&useUnicode=true&characterEncoding=utf8&autoReconnect=true&rewriteBatchedStatements=true&serverTimezone=Asia/Shanghai
+    #数据库用户名
+    username: root
+    #数据库密码
+    password: password
+
+
+    #####################连接池配置（jdbc2.0开始默认使用HikariCP连接池）########################
+    #连接池实现类名
+    type: com.zaxxer.hikari.HikariDataSource
+    hikari:
+      #是否自动提交(默认true)
+      auto-commit: true
+      #最大连接数--包括空闲和正使用的连接(默认10);推荐的公式: cpu核心数*2 + 硬盘数
+      maximum-pool-size: 10
+      #控制从池中获取的Connections是否是只读属性(默认false)
+      read-only: false
+      #连接初始化SQL
+      connection-init-sql: SELECT 'X'
+      #连接测试语句(驱动程序支持JDBC4则不需要配置)
+      connection-test-query: SELECT 'X'
+
+      #连接超时(默认30000 ms;最低可接受连接超时为250 ms),如果超时没有连接可用,将抛出SQLException
+      connection-timeout: 60000
+      #闲置超时(默认600000 ms;仅适用于将minimumIdle定义为小于maximumPoolSize;值为0表示空闲连接从不从池中删除,最小允许值为10000ms)
+      idle-timeout: 60000
+      #最大的生命时间(默认1800000 ms;0表示无限寿命)
+      max-lifetime: 1800000
+      #生效超时,该值必须小于connectionTimeout(默认5000)
+      validation-timeout: 3000

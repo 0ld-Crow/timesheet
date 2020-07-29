@@ -1,0 +1,26 @@
+#######################spring配置#######################
+
+spring:
+  #######################resources配置#######################
+  resources:
+    static-locations: classpath:/META-INF/resources/,classpath:/resources/,classpath:/static/,classpath:/templates/,classpath:/public/,classpath:/file/
+    chain:
+      cache: false
+    #devtools:
+    #  restart:
+    #    enabled: true
+    #    additional-paths: src/main/java
+    #  mvc:
+    #  static-path-pattern: classpath:/static,classpath:/templates
+
+  #####################servlet配置########################
+  servlet:
+    multipart:
+      #上传一个文件最大值
+      max-file-size: 110MB
+      #上传多个文件最大值
+      max-request-size: 50MB
+
+#####################log配置########################
+logging:
+  config: classpath:config/logback-spring.xml

@@ -1,0 +1,13 @@
+#######################server配置#######################
+
+server:
+  #项目路径
+  servlet.context-path: /timesheet
+  #端口号
+  port: 8087
+  #压缩（对传输到前端的东西进行压缩，有利于提高传输效率）
+  compression:
+    #是否开启
+    enabled: true 
+    #文件类型
+    mime-types: application/javascript,text/css,application/json,application/xml,text/html,text/xml,text/plain

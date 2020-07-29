@@ -1,0 +1,11 @@
+[2020-07-25 15:06:38.533] logback-timesheet [SessionValidationThread-1] INFO  org.apache.shiro.session.mgt.AbstractValidatingSessionManager Line:275 - Validating all active sessions...
+[2020-07-25 15:06:38.579] logback-timesheet [SessionValidationThread-1] INFO  org.apache.shiro.session.mgt.AbstractValidatingSessionManager Line:308 - Finished session validation.  No sessions were stopped.
+[2020-07-25 16:06:38.493] logback-timesheet [SessionValidationThread-1] INFO  org.apache.shiro.session.mgt.AbstractValidatingSessionManager Line:275 - Validating all active sessions...
+[2020-07-25 16:06:38.494] logback-timesheet [SessionValidationThread-1] INFO  org.apache.shiro.session.mgt.AbstractValidatingSessionManager Line:308 - Finished session validation.  No sessions were stopped.
+[2020-07-25 16:13:39.351] logback-timesheet [Thread-22] INFO  org.springframework.boot.web.servlet.context.AnnotationConfigServletWebServerApplicationContext Line:993 - Closing org.springframework.boot.web.servlet.context.AnnotationConfigServletWebServerApplicationContext@c9a77dd: startup date [Fri Jul 24 17:53:31 CST 2020]; root of context hierarchy
+[2020-07-25 16:13:39.396] logback-timesheet [Thread-22] INFO  org.springframework.context.support.DefaultLifecycleProcessor Line:366 - Stopping beans in phase 2147483647
+[2020-07-25 16:13:39.406] logback-timesheet [Thread-22] INFO  org.springframework.jmx.export.annotation.AnnotationMBeanExporter Line:451 - Unregistering JMX-exposed beans on shutdown
+[2020-07-25 16:13:39.407] logback-timesheet [Thread-22] INFO  org.springframework.jmx.export.annotation.AnnotationMBeanExporter Line:183 - Unregistering JMX-exposed beans
+[2020-07-25 16:13:39.469] logback-timesheet [Thread-22] INFO  org.apache.shiro.session.mgt.AbstractValidatingSessionManager Line:250 - Disabled session validation scheduler.
+[2020-07-25 16:13:39.470] logback-timesheet [Thread-22] INFO  com.zaxxer.hikari.HikariDataSource Line:381 - HikariPool-1 - Shutdown initiated...
+[2020-07-25 16:13:39.478] logback-timesheet [Thread-22] INFO  com.zaxxer.hikari.HikariDataSource Line:383 - HikariPool-1 - Shutdown completed.
