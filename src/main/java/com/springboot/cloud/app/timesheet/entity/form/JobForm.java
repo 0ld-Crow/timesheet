@@ -12,10 +12,9 @@ import javax.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import javax.validation.constraints.Pattern;
-/**
- * @ClassName JobForm
- * @Description 岗位信息表
- */
+
+
+
 @ApiModel
 @Data
 @AllArgsConstructor

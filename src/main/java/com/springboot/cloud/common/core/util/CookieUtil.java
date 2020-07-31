@@ -18,7 +18,6 @@ import java.util.Set;
  * 
  * ClassName CookieUtil 
  * @Description cookie工具类
- * @date 2016年10月12日
  */
 @Component
 public class CookieUtil {
@@ -27,9 +26,8 @@ public class CookieUtil {
     public static final String COOKIE_PATH     = "/";
     public static final String COOKIE_ENCODE   = "utf-8";
     
-    @Autowired
+
     private HttpServletResponse servletResponse;
-    @Autowired
     private HttpServletRequest servletRequest;
     
     public static HttpServletResponse response;

@@ -42,11 +42,8 @@ public class MOWorkController {
 
 	@Autowired
 	public IWorkService workService;
-
 	@Autowired
 	public IAccessTokenService accessTokenService;
-
-
 	@Autowired
 	public ISendMessageService sendMessageService;
 	@Autowired

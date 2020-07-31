@@ -10,10 +10,7 @@ import java.util.Date;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 
-/**
- * @ClassName MemberQueryForm
- * @Description 会员信息表
- */
+
 @ApiModel
 @Data
 @AllArgsConstructor

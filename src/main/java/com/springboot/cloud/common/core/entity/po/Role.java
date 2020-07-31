@@ -14,7 +14,7 @@ import lombok.NoArgsConstructor;
 @TableName("t_roles")
 public class Role extends BasePo {
     @TableId(type = IdType.AUTO)
-    @ApiModelProperty(value = "角色id")
+    @ApiModelProperty(value = "角色id",example = "1")
     private Long id;
     @ApiModelProperty(value = "角色编码")
     private String code;

@@ -19,10 +19,10 @@ import java.util.Date;
 @NoArgsConstructor
 public class SummaryVo extends BaseVo  {
 
-	@ApiModelProperty(value = "ids")
-	String ids;
+	@ApiModelProperty(value = "ids",example = "1")
+	Long ids;
 
-	@ApiModelProperty(value = "用户ID")
+	@ApiModelProperty(value = "用户ID",example = "1")
 	Long uId;
 
 	@JsonFormat(pattern = "yyyy-MM-dd", timezone="GMT+8")

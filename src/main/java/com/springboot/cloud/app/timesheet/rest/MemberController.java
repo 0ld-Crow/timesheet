@@ -67,7 +67,8 @@ public class MemberController {
             @DynamicParameter(name = "realName",value = "真实名称",example = "小明",dataTypeClass = String.class),
             @DynamicParameter(name = "username",value = "用户名",example = "小明",dataTypeClass = String.class),
             @DynamicParameter(name = "phone",value = "手机号码",example = "123456789",dataTypeClass = String.class),
-            @DynamicParameter(name = "isBan",value = "是否禁用（0为否｜1为是）",example = "0",dataTypeClass = Integer.class)
+            @DynamicParameter(name = "isBan",value = "是否禁用（0为否｜1为是）",example = "0",dataTypeClass = Integer.class),
+            @DynamicParameter(name = "password",value = "密码",example = "1234567890",dataTypeClass = Integer.class)
     }))
 	@PostMapping(value = "/update")
 	public Result update(@RequestBody JSONObject param) {

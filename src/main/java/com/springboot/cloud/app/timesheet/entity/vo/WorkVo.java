@@ -46,16 +46,16 @@ import javax.servlet.http.HttpServlet;
 @NoArgsConstructor
 public class WorkVo extends BaseVo  {
 
-	@ApiModelProperty(value = "工作记录表ID")
+	@ApiModelProperty(value = "工作记录表ID",example = "1")
 	Long id;
 
-	@ApiModelProperty(value = "项目ID")
+	@ApiModelProperty(value = "项目ID",example = "1")
 	Long pId;
 
 	@ApiModelProperty(value = "项目名称")
 	String projectName;
 
-	@ApiModelProperty(value = "用户ID")
+	@ApiModelProperty(value = "用户ID",example = "1")
 	Long uId;
 
 	@ApiModelProperty(value = "用户名称")

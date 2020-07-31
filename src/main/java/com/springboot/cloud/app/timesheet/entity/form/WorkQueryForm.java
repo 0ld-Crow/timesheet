@@ -11,18 +11,14 @@ import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
-/**
- * @ClassName WorkQueryForm
- * @Description 工作记录表
- * @Author cj
- * @Date 2019-11-11
- */
+
+
 @ApiModel
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper=false)
 public class WorkQueryForm extends BaseQueryForm<WorkQueryParam> {
-
+	@ApiModelProperty(value = "是否删除（0为否，1为是）",example = "0")
 	Integer isDelete;
 }

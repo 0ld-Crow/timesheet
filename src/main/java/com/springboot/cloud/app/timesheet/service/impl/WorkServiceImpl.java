@@ -13,6 +13,7 @@ import com.springboot.cloud.app.timesheet.dao.WorkMapper;
 import com.springboot.cloud.app.timesheet.entity.po.Member;
 import com.springboot.cloud.app.timesheet.entity.po.Project;
 import com.springboot.cloud.app.timesheet.entity.po.Work;
+
 import com.springboot.cloud.app.timesheet.entity.vo.SummaryVo;
 import com.springboot.cloud.app.timesheet.entity.vo.WorkVo;
 import com.springboot.cloud.app.timesheet.service.IWorkService;
@@ -177,6 +178,48 @@ public class WorkServiceImpl extends ServiceImpl<WorkMapper, Work>  implements I
         return CommonUtil.wrapPageList(putMemberName(page.getRecords()),count);
     }
 
+    @Override
+    public Map<String, Object> getWorkListByDateUsernameProjectname(JSONObject param) {
+
+        CommonUtil.defaultParam(param);
+
+        Page<Work> mPage = new Page<>(param.getLong("pageNum"),param.getLong("pageSize"));
+
+        //通过userName模糊查询到所有符合条件的member
+        QueryWrapper<Member> wrapper = new QueryWrapper<>();
+//        System.out.println("11111111111111111111111111111111111");
+//        System.out.println(param.getString("yonghuname"));
+        wrapper.like("realName",param.getString("yonghuname"));
+        List<Member> memberList = memberMapper.selectList(wrapper);
+        List<Long> memberids = new ArrayList<>();
+        for(Member menber: memberList){
+            memberids.add(menber.getId());
+        }
+//        System.out.println("33333333333333333333333"+memberids);
+
+        //通过projectName模糊查询到所有符合条件的project
+        QueryWrapper<Project> wrapper1 = new QueryWrapper<>();
+        wrapper1.like("name",param.getString("projectName"));
+        List<Project> projectList = projectMapper.selectList(wrapper1);
+        List<Long> projectids = new ArrayList<>();
+        for(Project project:projectList){
+            projectids.add(project.getId());
+        }
+
+
+        QueryWrapper<Work> wrapper2 = new QueryWrapper<>();
+        wrapper2.in("uId",memberids);
+//        wrapper2.in
+        wrapper2.in("pId",projectids);
+        wrapper2.between("workDate",param.getDate("begainTime"),param.getDate("endTime"));
+
+
+
+        IPage<Work> page = page(mPage,wrapper2);
+        int count = workMapper.selectCount(wrapper2);
+        return CommonUtil.wrapPageList(putMemberName(page.getRecords()),count);
+    }
+
     public List<WorkVo> putMemberName(List<Work> works){
         List<WorkVo> workVos = new ArrayList<>();
         for (Work work : works) {
@@ -199,6 +242,7 @@ public class WorkServiceImpl extends ServiceImpl<WorkMapper, Work>  implements I
         }
         return workVos;
     }
+
 
     private QueryWrapper<Work> queryWork(JSONObject param){
         List<Long> ids = new ArrayList<>();

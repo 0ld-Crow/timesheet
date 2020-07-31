@@ -21,7 +21,7 @@ import java.util.Date;
 public class ProjectQueryParam extends BaseParam {
 
     /**主键*/
-    @ApiModelProperty(value = "主键id")
+    @ApiModelProperty(value = "主键id",example = "1")
     private Long id;
     /**项目名称*/
     @ApiModelProperty(value = "项目名称")

@@ -49,8 +49,10 @@ public class IndexServiceImpl implements IIndexService {
         String password = param.getString("password");
 
         try {
-            Subject subject = SecurityUtils.getSubject();
+            //用shiro中自带的UsernamePasswordToken方法根据username和password生成token
             UsernamePasswordToken token = new UsernamePasswordToken(username,password);
+            //运用shiro中自带的login方法进行登陆验证
+            Subject subject = SecurityUtils.getSubject();
             subject.login(token);
         }catch (Exception e){
             if (e instanceof IncorrectCredentialsException){
@@ -58,7 +60,7 @@ public class IndexServiceImpl implements IIndexService {
             }
             throw e;
         }
-        //从session中获取到user（user和member一样，即用户都是会员）
+        //从session中获取到key为"user"的value
         Member member = (Member) CommonUtil.getSession("user");
 
         if (member == null){
@@ -67,7 +69,7 @@ public class IndexServiceImpl implements IIndexService {
             String accessToken = JwtUtil.sign(member.getUsername(),member.getPassword(),24 * 60 * 60 * 1000);
             String refreshToken = JwtUtil.sign(member.getUsername(),member.getPassword(),15 * 24 * 60 * 60 * 1000);
             Date expireTime = new Date(System.currentTimeMillis() + 24 * 60 * 60 * 1000);
-            //更新存在数据库中该会员的信息
+            //更新存在数据库中该员工的信息
             member.setAccessToken(accessToken);
             member.setRefreshToken(refreshToken);
             member.setLoginIp(CommonUtil.getIpAddr(request));

@@ -28,21 +28,21 @@ public class Job extends BasePo {
     
 
 	@TableId(type = IdType.AUTO)
-    @ApiModelProperty(value = "岗位信息表ID")
+    @ApiModelProperty(value = "岗位信息表ID",example = "1")
 	Long id;
 
-	@ApiModelProperty(value = "岗位名称")
+	@ApiModelProperty(value = "岗位名称",example = "后端开发工程师")
  	String name;
 
-	@ApiModelProperty(value = "是否禁用(0:否|1:是)")
+	@ApiModelProperty(value = "是否禁用(0:否|1:是)",example = "0")
 	Integer isBan;
 
-	@ApiModelProperty(value = "附加字段")
+	@ApiModelProperty(value = "附加字段",example = "附加字段")
 	String attach;
 
-	@ApiModelProperty(value = "备注")
+	@ApiModelProperty(value = "备注",example = "备注")
 	String remark;
 
-	@ApiModelProperty(value = "是否删除(0:否|1:是)")
+	@ApiModelProperty(value = "是否删除(0:否|1:是)",example = "0")
 	Integer isDelete;
 }

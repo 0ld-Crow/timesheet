@@ -216,6 +216,7 @@ public class MemberServiceImpl extends ServiceImpl<MemberMapper, Member>  implem
         List<MemberVo> memberVos = members.stream().map(m -> {
             MemberVo memberVo = new MemberVo();
             memberVo.setName(m.getRealName());
+            memberVo.setIsDelete(m.getIsDelete());
             memberVo.setRoleId(m.getRoleId());
             memberVo.setPhone(m.getPhone());
             memberVo.setUsername(m.getUsername());

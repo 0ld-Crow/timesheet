@@ -13,7 +13,7 @@ import java.util.Set;
 @NoArgsConstructor
 public class UserVo extends BaseVo{
 
-    @ApiModelProperty(value = "用户ID")
+    @ApiModelProperty(value = "用户ID",example = "1")
     private Long id;
 
     @ApiModelProperty(value = "用户名称")

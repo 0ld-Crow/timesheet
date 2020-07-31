@@ -13,7 +13,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class TodayNoReportPersonVo {
 
-    @ApiModelProperty(value = "人员id")
+    @ApiModelProperty(value = "人员id",example = "1")
     Long memberId;
 
     @ApiModelProperty(value = "姓名")

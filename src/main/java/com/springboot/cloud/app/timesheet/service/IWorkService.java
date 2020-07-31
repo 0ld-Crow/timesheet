@@ -6,6 +6,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import com.springboot.cloud.app.timesheet.entity.form.WorkForm;
 import com.springboot.cloud.app.timesheet.entity.po.Project;
 import com.springboot.cloud.app.timesheet.entity.po.Work;
+
 import com.springboot.cloud.app.timesheet.entity.vo.SummaryVo;
 import com.springboot.cloud.app.timesheet.entity.vo.WorkVo;
 import com.springboot.cloud.common.core.entity.vo.Result;
@@ -13,6 +14,7 @@ import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 import org.springframework.web.bind.annotation.RequestBody;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -58,4 +60,11 @@ public interface IWorkService extends IService<Work>{
      * 分页查询工作列表
      **/
     public Map<String,Object> getWorkListByPage(JSONObject param);
+
+    /**
+     * 通过模糊查询（日期，员工姓名，项目名称）查询work列表
+     **/
+    public Map<String,Object> getWorkListByDateUsernameProjectname(JSONObject param);
+
+
 }

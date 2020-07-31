@@ -3,6 +3,10 @@ package com.springboot.cloud.app.timesheet.rest;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.springboot.cloud.app.timesheet.dao.MemberMapper;
+import com.springboot.cloud.app.timesheet.entity.po.Member;
+import com.springboot.cloud.app.timesheet.entity.po.Project;
+import com.springboot.cloud.app.timesheet.service.IMemberService;
 import com.springboot.cloud.common.core.entity.vo.Result;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.springboot.cloud.app.timesheet.entity.vo.UnfilledVo;
@@ -20,6 +24,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.beans.BeanUtils;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
@@ -35,7 +41,11 @@ import java.util.stream.Collectors;
 @Slf4j
 @RequestMapping(value = "/unfilled")
 public class UnfilledController {
+	@Autowired
+	public IMemberService memberService;
 
+	@Autowired
+	MemberMapper memberMapper;
 	@Autowired
 	public IUnfilledService unfilledService;
 
@@ -96,57 +106,92 @@ public class UnfilledController {
 		}
 	}
 //==================================================================================================================================================================
-	@ApiOperation(value = "旷工表 - 分页列表", httpMethod = ConstantUtil.HTTP_POST,notes ="根据条件搜索模版数据 - 有分页")
+
+	@ApiOperation(value = "通过时间段和员工姓名来查询旷工表", httpMethod = ConstantUtil.HTTP_POST,notes ="通过时间端和员工姓名来查询旷工表")
     @ApiImplicitParams({
              @ApiImplicitParam(name = "unfilledQueryForm", value = "unfilled查询参数", required = true, dataType = "unfilledQueryForm"),
-             @ApiImplicitParam(name = "pageNum", value = "分页数", required = true, dataType = "int"),
-             @ApiImplicitParam(name = "pageSize", value = "分页大小", required = true, dataType = "int")
+			@ApiImplicitParam(name = "begainTime", value = "开始日期", required = true, dataType = "Date"),
+			@ApiImplicitParam(name = "endTime", value = "结束日期", required = true, dataType = "Date"),
+			@ApiImplicitParam(name = "yonghuname", value = "用户名称", required = true, dataType = "String"),
+			@ApiImplicitParam(name = "pageNum", value = "分页数", required = true, dataType = "long"),
+             @ApiImplicitParam(name = "pageSize", value = "分页大小", required = true, dataType = "long")
     })
     @PostMapping("/query")
-    public Result<Page<UnfilledVo>> query(@Valid UnfilledQueryForm unfilledQueryForm,@RequestParam(defaultValue = "1") int pageNum,@RequestParam(defaultValue = "10") int pageSize) {
-         log.info("query with unfilledQueryForm:{}", unfilledQueryForm);
-         if(unfilledQueryForm == null){
-             unfilledQueryForm = new UnfilledQueryForm();
-         }
-         Page<Unfilled> page = new Page<Unfilled>(pageNum,pageSize);
+    public Result<Page<UnfilledVo>> query(@RequestBody JSONObject param){
+    		//@Valid UnfilledQueryForm unfilledQueryForm,@RequestParam(defaultValue = "1") int pageNum,@RequestParam(defaultValue = "10") int pageSize) {
+         log.info("query with unfilledQueryForm:{}", param);
+//         if(unfilledQueryForm == null){
+//             unfilledQueryForm = new UnfilledQueryForm();
+//         }
+         Page<Unfilled> page = new Page<Unfilled>(param.getLong("pageNum"),param.getLong("pageSize"));
 //         page.setSearchCount(true);
-         UnfilledQueryParam unfilledQueryParam = unfilledQueryForm.toParam(UnfilledQueryParam.class);
-         QueryWrapper queryWrapper = new QueryWrapper();
+//         UnfilledQueryParam unfilledQueryParam = unfilledQueryForm.toParam(UnfilledQueryParam.class);
+
+
+
+
+		//通过userName模糊查询到所有符合条件的member
+		QueryWrapper<Member> wrapper = new QueryWrapper<>();
+		wrapper.like("realName",param.getString("yonghuname"));
+		List<Member> memberList = memberMapper.selectList(wrapper);
+		List<Long> memberids = new ArrayList<>();
+		for(Member menber: memberList){
+			memberids.add(menber.getId());
+		}
+		//如果menberids为空的话不能去进行
+		List<Long> kong = new ArrayList<>();
+		if(memberids.equals(kong)){
+			IPage<UnfilledVo> ipageRes1 = new Page<UnfilledVo>();
+			return Result.success(ipageRes1);
+		}
+
+		QueryWrapper<Unfilled> queryWrapper = new QueryWrapper<>();
+
+         queryWrapper.in("uId",memberids);
+
+		queryWrapper.between("workDate",param.getDate("begainTime"),param.getDate("endTime"));
+
+
          IPage<Unfilled> ipage = unfilledService.page(page,queryWrapper);
+
          IPage<UnfilledVo> ipageRes = new Page<UnfilledVo>();
+
          BeanUtils.copyProperties(ipage,ipageRes);
          List<Unfilled> unfilleds = ipage.getRecords();
+
          List<UnfilledVo> unfilledVos = unfilleds.stream().map(unfilled -> {
          	UnfilledVo unfilledVo = new UnfilledVo();
          	BeanUtils.copyProperties(unfilled,unfilledVo);
+			 unfilledVo.setUserName(memberService.getById(unfilled.getUId()).getRealName());
          	return unfilledVo;
          }).collect(Collectors.toList());
          ipageRes.setRecords(unfilledVos);
          return Result.success(ipageRes);
     }
 //==================================================================================================================================================================
-   @ApiOperation(value = "旷工表 - 无分页列表", httpMethod = ConstantUtil.HTTP_POST,notes ="根据条件搜索模版数据 - 无分页")
-   @ApiImplicitParams({
-                @ApiImplicitParam(name = "unfilledQueryForm", value = "unfilled查询参数", required = true, dataType = "unfilledQueryForm"),
-   })
-   @PostMapping("/queryAll")
-   public Result<List<UnfilledVo>> queryAll(@Valid UnfilledQueryForm unfilledQueryForm,@RequestParam(defaultValue = "1") int pageNum,@RequestParam(defaultValue = "10") int pageSize) {
-         log.info("query with unfilledQueryForm:{}", unfilledQueryForm);
-         if(unfilledQueryForm == null){
-             unfilledQueryForm = new UnfilledQueryForm();
-         }
-         Page<Unfilled> page = new Page<Unfilled>(pageNum,pageSize);
-//         page.setSearchCount(true);
-         UnfilledQueryParam unfilledQueryParam = unfilledQueryForm.toParam(UnfilledQueryParam.class);
-         QueryWrapper queryWrapper = new QueryWrapper();
-         List<Unfilled> unfilleds = unfilledService.list(queryWrapper);
-         List<UnfilledVo> unfilledVos = unfilleds.stream().map(unfilled -> {
-              UnfilledVo unfilledVo = new UnfilledVo();
-              BeanUtils.copyProperties(unfilled,unfilledVo);
-              return unfilledVo;
-         }).collect(Collectors.toList());
-         return Result.success(unfilledVos);
-    }
+	////还没有进行任何定义的查询
+//	@ApiOperation(value = "旷工表 - 无分页列表", httpMethod = ConstantUtil.HTTP_POST,notes ="根据条件搜索模版数据 - 无分页")
+//   @ApiImplicitParams({
+//                @ApiImplicitParam(name = "unfilledQueryForm", value = "unfilled查询参数", required = true, dataType = "unfilledQueryForm"),
+//   })
+//   @PostMapping("/queryAll")
+//   public Result<List<UnfilledVo>> queryAll(@Valid UnfilledQueryForm unfilledQueryForm,@RequestParam(defaultValue = "1") int pageNum,@RequestParam(defaultValue = "10") int pageSize) {
+//         log.info("query with unfilledQueryForm:{}", unfilledQueryForm);
+//         if(unfilledQueryForm == null){
+//             unfilledQueryForm = new UnfilledQueryForm();
+//         }
+//         Page<Unfilled> page = new Page<Unfilled>(pageNum,pageSize);
+////         page.setSearchCount(true);
+//         UnfilledQueryParam unfilledQueryParam = unfilledQueryForm.toParam(UnfilledQueryParam.class);
+//         QueryWrapper queryWrapper = new QueryWrapper();
+//         List<Unfilled> unfilleds = unfilledService.list(queryWrapper);
+//         List<UnfilledVo> unfilledVos = unfilleds.stream().map(unfilled -> {
+//              UnfilledVo unfilledVo = new UnfilledVo();
+//              BeanUtils.copyProperties(unfilled,unfilledVo);
+//              return unfilledVo;
+//         }).collect(Collectors.toList());
+//         return Result.success(unfilledVos);
+//    }
 //==================================================================================================================================================================
     @ApiOperation(value = "分页获取所有旷工表",httpMethod = ConstantUtil.HTTP_POST)
 	@ApiOperationSupport(params = @DynamicParameters(name = "json", properties = {

@@ -88,7 +88,7 @@ public class ProjectController {
              @ApiImplicitParam(name = "pageSize", value = "分页大小",dataType = "int")
     })
     @PostMapping("/query")
-    public Result<Page<ProjectVo>> query(@Valid @RequestBody ProjectQueryForm projectQueryForm,@RequestParam(defaultValue = "1") int pageNum,@RequestParam(defaultValue = "10") int pageSize) {
+    public Result<Page<Project>> query(@Valid @RequestBody ProjectQueryForm projectQueryForm,@RequestParam(defaultValue = "1") int pageNum,@RequestParam(defaultValue = "10") int pageSize) {
          log.info("query with projectQueryForm:{}", projectQueryForm);
          if(projectQueryForm == null){
              projectQueryForm = new ProjectQueryForm();
@@ -120,7 +120,7 @@ public class ProjectController {
 //		   @DynamicParameter(name = "pageNum",value = "1",example = "1",dataTypeClass = Integer.class)
 //   }))
    @PostMapping("/queryAll")
-   public Result<List<ProjectVo>> queryAll(@Valid @RequestBody ProjectQueryForm projectQueryForm) {
+   public Result<List<Project>> queryAll(@Valid @RequestBody ProjectQueryForm projectQueryForm) {
          log.info("query with projectQueryForm:{}", projectQueryForm);
          if(projectQueryForm == null){
              projectQueryForm = new ProjectQueryForm();
@@ -139,10 +139,10 @@ public class ProjectController {
          return Result.success(projectVos);
     }
 //==================================================================================================================================================================
-    @ApiOperation(value = "查询到某个项目的工时列表",httpMethod = ConstantUtil.HTTP_POST,notes ="查询到某个项目的工时列表")
+    @ApiOperation(value = "查询到所有项目的工时列表",httpMethod = ConstantUtil.HTTP_POST,notes ="查询到所有项目的工时列表")
 	@ApiOperationSupport(params = @DynamicParameters(name = "json", properties = {
-			@DynamicParameter(name = "pageSize",value = "10",example = "1",dataTypeClass = Integer.class),
-			@DynamicParameter(name = "pageNum",value = "1",example = "1",dataTypeClass = Integer.class)
+//			@DynamicParameter(name = "pageSize",value = "10",example = "1",dataTypeClass = Integer.class),
+//			@DynamicParameter(name = "pageNum",value = "1",example = "1",dataTypeClass = Integer.class)
 	}))
     @PostMapping("/projectWorkTime")
     public Result<List<ProjectWorkTimeVo>> projectWorkTime(@RequestBody JSONObject param){
@@ -185,8 +185,8 @@ public class ProjectController {
 //==================================================================================================================================================================
 	@ApiOperation(value = "查询到某个项目的工时列表明细",httpMethod = ConstantUtil.HTTP_POST,notes ="查询到某个项目的工时列表明细")
 	@ApiOperationSupport(params = @DynamicParameters(name = "json", properties = {
-			@DynamicParameter(name = "pageSize",value = "10",example = "10",dataTypeClass = Integer.class),
-			@DynamicParameter(name = "pageNum",value = "1",example = "1",dataTypeClass = Integer.class),
+//			@DynamicParameter(name = "pageSize",value = "10",example = "10",dataTypeClass = Integer.class),
+//			@DynamicParameter(name = "pageNum",value = "1",example = "1",dataTypeClass = Integer.class),
 			@DynamicParameter(name = "pId",value = "项目id",example = "1",dataTypeClass = Long.class),
 			@DynamicParameter(name = "type",value = "post|按岗位属性、person|按人员",example = "post|按岗位属性、person|按人员",dataTypeClass = String.class)
 	}))

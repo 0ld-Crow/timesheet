@@ -9,11 +9,11 @@ import java.util.Date;
 import javax.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
+
 import javax.validation.constraints.Pattern;
-/**
- * @ClassName UnfilledForm
- * @Description 工作未填写表
- */
+
+
 @ApiModel
 @Data
 @AllArgsConstructor
@@ -21,12 +21,13 @@ import javax.validation.constraints.Pattern;
 public class UnfilledForm extends BaseForm<Unfilled> {
     @ApiModelProperty(value = "员工的id",example = "1")
     Long uId;
-    @ApiModelProperty(value = "员工缺勤的日期",example = "2020-07-27")
+    @DateTimeFormat(pattern="yyyy-MM-dd")
+    @ApiModelProperty(value = "工作日期",example = "2020-07-27")
     Date workDate;
     @ApiModelProperty(value = "附加字段",example = "附加字段")
     String attach;
     @ApiModelProperty(value = "备注",example = "备注")
     String remark;
-    @ApiModelProperty(value = "是否删除（0为否，1为是）",example = "1")
+    @ApiModelProperty(value = "是否删除（0为否，1为是）",example = "0")
     Integer isDelete;
 }

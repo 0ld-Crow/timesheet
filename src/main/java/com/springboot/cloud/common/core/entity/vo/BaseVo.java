@@ -8,8 +8,6 @@ import java.util.Date;
 /**
  * @ClassName BaseVo
  * @Description
- * @Author cj
- * @Date 2019/05/30
  */
 public class BaseVo {
 
@@ -23,7 +21,7 @@ public class BaseVo {
     String remark;
 
     @ApiModelProperty(value = "是否删除(0:否|1:是)")
-    Byte isDelete;
+    int isDelete;
 
     @ApiModelProperty(value = "创建人")
     String createdBy;

@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.springboot.cloud.app.timesheet.entity.po.Project;
+
 import com.springboot.cloud.app.timesheet.entity.vo.SummaryVo;
 import com.springboot.cloud.app.timesheet.service.*;
 import com.springboot.cloud.common.core.entity.vo.Result;
@@ -29,6 +30,7 @@ import java.util.Date;
 import java.util.List;
 
 import javax.validation.Valid;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 /**
@@ -120,57 +122,89 @@ public class PCWorkController {
 		}
 	}
 	//==================================================================================================================================================================
-	@ApiOperation(value = "工作记录表 - 分页列表", httpMethod = ConstantUtil.HTTP_POST,notes ="根据条件搜索模版数据 - 有分页")
+	@ApiOperation(value = "根据日期，用户名，项目名进行模糊查询work", httpMethod = ConstantUtil.HTTP_POST,notes ="根据日期，用户名，项目名进行模糊查询work")
     @ApiImplicitParams({
-             @ApiImplicitParam(name = "workQueryForm", value = "work查询参数", required = true, dataType = "workQueryForm"),
-             @ApiImplicitParam(name = "pageNum", value = "分页数", required = true, dataType = "int"),
-             @ApiImplicitParam(name = "pageSize", value = "分页大小", required = true, dataType = "int")
+
+			@ApiImplicitParam(name = "begainTime", value = "开始日期", required = true, dataType = "Date"),
+			@ApiImplicitParam(name = "endTime", value = "结束日期", required = true, dataType = "Date"),
+			@ApiImplicitParam(name = "yonghuname", value = "用户名称", required = true, dataType = "String"),
+			@ApiImplicitParam(name = "projectName", value = "项目名称", required = true, dataType = "String"),
+			@ApiImplicitParam(name = "pageNum", value = "分页数", required = true, dataType = "long",defaultValue = "1"),
+             @ApiImplicitParam(name = "pageSize", value = "分页大小", required = true, dataType = "long",defaultValue = "10")
     })
-    @PostMapping("/query")
-    public Result<Page<WorkVo>> query(@Valid WorkQueryForm workQueryForm,@RequestParam(defaultValue = "1") int pageNum,@RequestParam(defaultValue = "10") int pageSize) {
-         log.info("query with workQueryForm:{}", workQueryForm);
-         if(workQueryForm == null){
-             workQueryForm = new WorkQueryForm();
-         }
-         Page<Work> page = new Page<Work>(pageNum,pageSize);
-//         page.setSearchCount(true);
-         WorkQueryParam workQueryParam = workQueryForm.toParam(WorkQueryParam.class);
-         QueryWrapper queryWrapper = new QueryWrapper();
-         IPage<Work> ipage = workService.page(page,queryWrapper);
-         IPage<WorkVo> ipageRes = new Page<WorkVo>();
-         BeanUtils.copyProperties(ipage,ipageRes);
-         List<Work> works = ipage.getRecords();
-         List<WorkVo> workVos = works.stream().map(work -> {
-         	WorkVo workVo = new WorkVo();
-         	BeanUtils.copyProperties(work,workVo);
-         	return workVo;
-         }).collect(Collectors.toList());
-         ipageRes.setRecords(workVos);
-         return Result.success(ipageRes);
+    @PostMapping("/getWorkListByDateUsernameProjectname")
+    public Result<Page<WorkVo>> getWorkListByDateUsernameProjectname(@RequestBody JSONObject param) {
+         log.info("query with workQueryForm:{}", param);
+
+
+		try {
+			return Result.success(workService.getWorkListByDateUsernameProjectname(param));
+		}catch (Exception e){
+			e.printStackTrace();
+			return Result.fail();
+		}
+
+
+//
+//
+//         if(workQueryForm == null){
+//             workQueryForm = new WorkQueryForm();
+//         }
+//         Page<Work> page = new Page<Work>(pageNum,pageSize);
+////         page.setSearchCount(true);
+//         WorkQueryParam workQueryParam = workQueryForm.toParam(WorkQueryParam.class);
+//         QueryWrapper queryWrapper = new QueryWrapper();
+//         if(begaintime !=null && endtime!=null){
+//			 queryWrapper.between("workDate",begaintime,endtime);
+//		 }
+//         if(userId!=null){
+//         	queryWrapper.like("u",userId);
+//		 }
+//
+//
+//
+//
+//
+//
+//
+//
+//         IPage<Work> ipage = workService.page(page,queryWrapper);
+//         IPage<WorkVo> ipageRes = new Page<WorkVo>();
+//         BeanUtils.copyProperties(ipage,ipageRes);
+//         List<Work> works = ipage.getRecords();
+//         List<WorkVo> workVos = works.stream().map(work -> {
+//         	WorkVo workVo = new WorkVo();
+//         	BeanUtils.copyProperties(work,workVo);
+//         	return workVo;
+//         }).collect(Collectors.toList());
+//         ipageRes.setRecords(workVos);
+//         return Result.success(ipageRes);
     }
 
-   @ApiOperation(value = "工作记录表 - 无分页列表", httpMethod = ConstantUtil.HTTP_POST,notes ="根据条件搜索模版数据 - 无分页")
-   @ApiImplicitParams({
-                @ApiImplicitParam(name = "workQueryForm", value = "work查询参数", required = true, dataType = "workQueryForm"),
-   })
-   @PostMapping("/queryAll")
-   public Result<List<Work>> queryAll(@Valid WorkQueryForm workQueryForm,@RequestParam(defaultValue = "1") int pageNum,@RequestParam(defaultValue = "10") int pageSize) {
-         log.info("query with workQueryForm:{}", workQueryForm);
-         if(workQueryForm == null){
-             workQueryForm = new WorkQueryForm();
-         }
-         Page<Work> page = new Page<Work>(pageNum,pageSize);
-//         page.setSearchCount(true);
-         WorkQueryParam workQueryParam = workQueryForm.toParam(WorkQueryParam.class);
-         QueryWrapper queryWrapper = new QueryWrapper();
-         List<Work> works = workService.list(queryWrapper);
-         List<WorkVo> workVos = works.stream().map(work -> {
-              WorkVo workVo = new WorkVo();
-              BeanUtils.copyProperties(work,workVo);
-              return workVo;
-         }).collect(Collectors.toList());
-         return Result.success(workVos);
-    }
+
+    //没有进行任何定义的查询
+//   @ApiOperation(value = "工作记录表 - 无分页列表", httpMethod = ConstantUtil.HTTP_POST,notes ="根据条件搜索模版数据 - 无分页")
+//   @ApiImplicitParams({
+//                @ApiImplicitParam(name = "workQueryForm", value = "work查询参数", required = true, dataType = "workQueryForm"),
+//   })
+//   @PostMapping("/queryAll")
+//   public Result<List<Work>> queryAll(@Valid WorkQueryForm workQueryForm,@RequestParam(defaultValue = "1") int pageNum,@RequestParam(defaultValue = "10") int pageSize) {
+//         log.info("query with workQueryForm:{}", workQueryForm);
+//         if(workQueryForm == null){
+//             workQueryForm = new WorkQueryForm();
+//         }
+//         Page<Work> page = new Page<Work>(pageNum,pageSize);
+////         page.setSearchCount(true);
+//         WorkQueryParam workQueryParam = workQueryForm.toParam(WorkQueryParam.class);
+//         QueryWrapper queryWrapper = new QueryWrapper();
+//         List<Work> works = workService.list(queryWrapper);
+//         List<WorkVo> workVos = works.stream().map(work -> {
+//              WorkVo workVo = new WorkVo();
+//              BeanUtils.copyProperties(work,workVo);
+//              return workVo;
+//         }).collect(Collectors.toList());
+//         return Result.success(workVos);
+//    }
 	//==================================================================================================================================================================
 	@ApiOperation(value = "批量删除工作记录表",httpMethod = ConstantUtil.HTTP_POST,notes = "批量删除工作记录表")
 	@ApiOperationSupport(params = @DynamicParameters(name = "json", properties = {
@@ -227,5 +261,11 @@ public class PCWorkController {
 			return Result.fail();
 		}
 	}
+
+
+
+
+
+
 
 }

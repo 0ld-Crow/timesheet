@@ -10,17 +10,13 @@ import java.util.Date;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 
-/**
- * @ClassName UnfilledQueryForm
- * @Description 工作未填写表
- * @Author cj
- * @Date 2019-11-11
- */
+
+
 @ApiModel
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 public class UnfilledQueryForm extends BaseQueryForm<UnfilledQueryParam> {
-
+    @ApiModelProperty(value = "是否删除（0为否，1为是）",example = "0")
     Integer isDelete;
 }

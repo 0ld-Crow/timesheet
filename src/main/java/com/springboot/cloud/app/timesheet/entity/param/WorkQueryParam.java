@@ -13,8 +13,6 @@ import java.util.Date;
 /**
  * @ClassName WorkQueryParam
  * @Description 工作记录表 - Param Object
- * @Author cj
- * @Date 2019-11-11
  */
 @Data
 @AllArgsConstructor

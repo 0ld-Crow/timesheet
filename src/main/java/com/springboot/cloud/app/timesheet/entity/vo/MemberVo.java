@@ -17,10 +17,10 @@ import org.springframework.format.annotation.DateTimeFormat;
 @NoArgsConstructor
 public class MemberVo extends BaseVo {
 
-    @ApiModelProperty(value = "用户ID")
+    @ApiModelProperty(value = "用户ID",example = "1")
     Long uid;
 
-    @ApiModelProperty(value = "用户姓名")
+    @ApiModelProperty(value = "用户姓名",example = "")
     String name;
 
     @ApiModelProperty(value = "用户名")
@@ -29,7 +29,7 @@ public class MemberVo extends BaseVo {
     @ApiModelProperty(value = "用户电话")
     String phone;
 
-    @ApiModelProperty(value = "角色ID")
+    @ApiModelProperty(value = "角色ID",example = "1")
     Long roleId;
 
     @ApiModelProperty(value = "角色名称")
@@ -40,4 +40,7 @@ public class MemberVo extends BaseVo {
 
     @ApiModelProperty(value = "岗位")
     String job;
+
+    @ApiModelProperty(value = "是否删除")
+    int isDelete;
 }

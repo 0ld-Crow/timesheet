@@ -17,7 +17,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 @NoArgsConstructor
 public class JobVo extends BaseVo  {
 
-	@ApiModelProperty(value = "JobVoID")
-	Integer id;
+	@ApiModelProperty(value = "岗位信息表ID",example = "1")
+	Long id;
 
 }

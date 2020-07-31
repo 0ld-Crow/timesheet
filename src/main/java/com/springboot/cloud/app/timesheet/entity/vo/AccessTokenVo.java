@@ -18,16 +18,16 @@ import java.util.Date;
 @NoArgsConstructor
 public class AccessTokenVo{
 
-	@ApiModelProperty(value = "AccessTokenVoID")
+	@ApiModelProperty(value = "AccessTokenVoID",example = "1")
 	Long id;
 
-	@ApiModelProperty(value = "accessToke")
+	@ApiModelProperty(value = "accessToke",example = "dskjhfisdhfbhfvhefvhioeahfioahvuia")
 	String accessToke;
 
-	@ApiModelProperty(value = "过期时间戳")
+	@ApiModelProperty(value = "过期时间戳",example = "100000")
 	Long expiresIn;
 
-	@ApiModelProperty(value = "类型，0：普通类型，1：用于通讯录使用")
+	@ApiModelProperty(value = "类型，0：普通类型，1：用于通讯录使用",example = "0")
 	Byte type;
 
 }

@@ -32,7 +32,6 @@ import java.util.stream.Collectors;
 @Api(tags="【PC端】岗位模块")
 @Slf4j
 @RequestMapping(value = "/job")
-
 public class JobController {
 
 	@Autowired
@@ -109,7 +108,7 @@ public class JobController {
     })
     @PostMapping("/query")
 	//@RequestParam(defaultValue = "1")  @RequestParam(defaultValue = "10")
-    public Result<Page<JobVo>> query(@Valid  @RequestBody JobQueryForm jobQueryForm,  @RequestParam(defaultValue = "1") int pageNum,  @RequestParam(defaultValue = "10") int pageSize) {
+    public Result<Page<Job>> query(@Valid  @RequestBody JobQueryForm jobQueryForm,  @RequestParam(defaultValue = "1") int pageNum,  @RequestParam(defaultValue = "10") int pageSize) {
          log.info("query with jobQueryForm:{}", jobQueryForm);
          if(jobQueryForm == null){
              jobQueryForm = new JobQueryForm();
@@ -120,21 +119,21 @@ public class JobController {
          QueryWrapper queryWrapper = new QueryWrapper();
          queryWrapper.like(null != jobQueryParam.getName(), "name",jobQueryParam.getName());
          IPage<Job> ipage = jobService.page(page,queryWrapper);
-         IPage<JobVo> ipageRes = new Page<JobVo>();
-         BeanUtils.copyProperties(ipage,ipageRes);
-         List<Job> jobs = ipage.getRecords();
-         List<JobVo> jobVos = jobs.stream().map(job -> {
-         	JobVo jobVo = new JobVo();
-         	BeanUtils.copyProperties(job,jobVo);
-         	return jobVo;
-         }).collect(Collectors.toList());
-         ipageRes.setRecords(jobVos);
-         return Result.success(ipageRes);
+//         IPage<JobVo> ipageRes = new Page<JobVo>();
+//         BeanUtils.copyProperties(ipage,ipageRes);
+//         List<Job> jobs = ipage.getRecords();
+//         List<JobVo> jobVos = jobs.stream().map(job -> {
+//         	JobVo jobVo = new JobVo();
+//         	BeanUtils.copyProperties(job,jobVo);
+//         	return jobVo;
+//         }).collect(Collectors.toList());
+//         ipageRes.setRecords(jobVos);
+         return Result.success(ipage);
     }
 	//==================================================================================================================================================================
    @ApiOperation(value = "通过岗位名称来模糊查询（生成的岗位列表没分页）", httpMethod = ConstantUtil.HTTP_POST,notes ="根据条件搜索模版数据 - 无分页")
    @PostMapping("/queryAll")
-   public Result<List<JobVo>> queryAll(@Valid  @RequestBody JobQueryForm jobQueryForm) {
+   public Result<List<Job>> queryAll(@Valid  @RequestBody JobQueryForm jobQueryForm) {
          log.info("query with jobQueryForm:{}", jobQueryForm);
          if(jobQueryForm == null){
              jobQueryForm = new JobQueryForm();
@@ -145,12 +144,12 @@ public class JobController {
          QueryWrapper queryWrapper = new QueryWrapper();
          queryWrapper.like(null != jobQueryParam.getName(), "name",jobQueryParam.getName());
          List<Job> jobs = jobService.list(queryWrapper);
-         List<JobVo> jobVos = jobs.stream().map(job -> {
-              JobVo jobVo = new JobVo();
-              BeanUtils.copyProperties(job,jobVo);
-              return jobVo;
-         }).collect(Collectors.toList());
-         return Result.success(jobVos);
+//         List<JobVo> jobVos = jobs.stream().map(job -> {
+//              JobVo jobVo = new JobVo();
+//              BeanUtils.copyProperties(job,jobVo);
+//              return jobVo;
+//         }).collect(Collectors.toList());
+         return Result.success(jobs);
     }
 	//==================================================================================================================================================================
 	@ApiOperation(value = "分页查询所有岗位列表")

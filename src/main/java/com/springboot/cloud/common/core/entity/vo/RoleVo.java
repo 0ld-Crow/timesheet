@@ -12,7 +12,7 @@ import java.util.Date;
 @NoArgsConstructor
 public class RoleVo extends BaseVo {
 
-    @ApiModelProperty(value = "角色id")
+    @ApiModelProperty(value = "角色id",example = "1")
     private Long id;
 
     @ApiModelProperty(value = "角色编码")
@@ -27,7 +27,7 @@ public class RoleVo extends BaseVo {
     @ApiModelProperty(value = "角色状态")
     private Boolean status;
 
-    @ApiModelProperty(value = "")
+    @ApiModelProperty(value = "",example = "1")
     private Long domianId;
 
     @ApiModelProperty(value = "角色创建时间")

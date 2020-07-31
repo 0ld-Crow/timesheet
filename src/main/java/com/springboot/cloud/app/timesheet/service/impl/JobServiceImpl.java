@@ -22,8 +22,6 @@ import java.util.stream.Stream;
 /**
  * @ClassName JobServiceImpl
  * @Description 岗位信息表 - 信息业务层实现
- * @Author cj
- * @Date: 2019-11-11
  */
 @Service("jobService")
 public class JobServiceImpl extends ServiceImpl<JobMapper, Job>  implements IJobService {

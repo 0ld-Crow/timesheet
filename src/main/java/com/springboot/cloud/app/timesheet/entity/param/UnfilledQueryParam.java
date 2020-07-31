@@ -12,8 +12,6 @@ import java.util.Date;
 /**
  * @ClassName UnfilledQueryParam
  * @Description 工作未填写表 - Param Object
- * @Author cj
- * @Date 2019-11-11
  */
 @Data
 @AllArgsConstructor

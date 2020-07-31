@@ -19,7 +19,7 @@ import java.util.Date;
 @NoArgsConstructor
 public class ProjectWorkTimeVo extends BaseVo {
 
-    @ApiModelProperty(value = "项目id")
+    @ApiModelProperty(value = "项目id",example = "1")
     Long pId;
 
     @ApiModelProperty(value = "项目名称")
@@ -46,4 +46,7 @@ public class ProjectWorkTimeVo extends BaseVo {
 
     @ApiModelProperty(value = "岗位名称")
     String postName;
+
+
+
 }

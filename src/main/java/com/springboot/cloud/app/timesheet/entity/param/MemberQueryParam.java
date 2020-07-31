@@ -23,7 +23,7 @@ public class MemberQueryParam extends BaseParam {
     /**主键*/
     private Long id;
     /**角色ID*/
-    private String roleId;
+    private Long roleId;
     /**账号*/
     private String username;
     /**密码*/

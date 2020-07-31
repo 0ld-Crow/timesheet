@@ -22,13 +22,13 @@ import org.springframework.format.annotation.DateTimeFormat;
 @NoArgsConstructor
 public class UnfilledVo extends BaseVo {
 
-    @ApiModelProperty(value = "未填写的工作记录表ID")
+    @ApiModelProperty(value = "未填写的工作记录表ID",example = "1")
     Long id;
 
-    @ApiModelProperty(value = "用户ID")
+    @ApiModelProperty(value = "用户ID",example = "1")
     Long uId;
 
-    @ApiModelProperty(value = "用户名称")
+    @ApiModelProperty(value = "用户名称",example = "小明")
     String userName;
 
     @JsonFormat(pattern = "yyyy-MM-dd", timezone="GMT+8")

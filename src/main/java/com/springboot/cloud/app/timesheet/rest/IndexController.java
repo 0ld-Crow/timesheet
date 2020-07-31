@@ -2,9 +2,14 @@ package com.springboot.cloud.app.timesheet.rest;
 
 import com.alibaba.fastjson.JSONObject;
 import com.springboot.cloud.app.timesheet.dao.MemberMapper;
+import com.springboot.cloud.app.timesheet.dao.PermissonMapper;
 import com.springboot.cloud.app.timesheet.dao.RoleMapper;
+import com.springboot.cloud.app.timesheet.entity.po.Job;
 import com.springboot.cloud.app.timesheet.entity.po.Member;
+import com.springboot.cloud.app.timesheet.entity.po.Permisson;
+import com.springboot.cloud.app.timesheet.entity.vo.JobVo;
 import com.springboot.cloud.app.timesheet.service.IIndexService;
+import com.springboot.cloud.app.timesheet.service.IPermissonService;
 import com.springboot.cloud.common.core.entity.po.Role;
 import com.springboot.cloud.common.core.entity.vo.Result;
 import com.springboot.cloud.common.core.entity.vo.UserVo;
@@ -38,12 +43,13 @@ public class IndexController {
 
     @Autowired
     IIndexService indexService;
-
     @Autowired
     MemberMapper memberMapper;
-
     @Autowired
     RoleMapper roleMapper;
+    @Autowired
+    IPermissonService permissonService;
+
 
     @ApiOperation(value = "登录",httpMethod = ConstantUtil.HTTP_POST, notes = "登录")
     @ApiOperationSupport(params = @DynamicParameters(name = "json", properties = {
@@ -81,8 +87,10 @@ public class IndexController {
     public  Result signout(HttpServletRequest request, HttpServletResponse response) {
         log.debug("--------------signout--------------");
         try {
-            SecurityUtils.getSubject().logout(); //调用shiro删除所有session
-            CommonUtil.setSession("user",null); //删除session
+            //运用shiro中自带的logout方法进行退出操作，删除所有session中的所有键值对
+            SecurityUtils.getSubject().logout();
+            //新增加一个key为"user"的，value为空的键值对
+            CommonUtil.setSession("user",null);
             return Result.success();
         } catch (Exception e) {
             return Result.fail();
@@ -99,7 +107,7 @@ public class IndexController {
             return Result.fail();
         }
     }
-//==================================================================================================================================================================
+    //==================================================================================================================================================================
     @ApiOperation(value = "新增一个角色", httpMethod = ConstantUtil.HTTP_POST, notes = "新增一个角色")
     @ApiOperationSupport(params = @DynamicParameters(name = "json", properties = {
             @DynamicParameter(name = "code",value = "角色编码",example = "1",dataTypeClass = String.class),
@@ -112,6 +120,26 @@ public class IndexController {
         try {
             Role role = (Role)ObjectUtil.map2ObjAndCast(param, Role.class);
             roleMapper.insert(role);
+        }catch (Exception e){
+            e.printStackTrace();
+            return Result.fail();
+        }
+        return Result.success();
+    }
+    //==================================================================================================================================================================
+    @ApiOperation(value = "更新一个角色", httpMethod = ConstantUtil.HTTP_POST, notes = "更新一个角色")
+    @ApiOperationSupport(params = @DynamicParameters(name = "json", properties = {
+            @DynamicParameter(name = "id",value = "角色id",example = "1",dataTypeClass = String.class),
+            @DynamicParameter(name = "code",value = "角色编码",example = "1",dataTypeClass = String.class),
+            @DynamicParameter(name = "name",value = "角色名称",example = "小明",dataTypeClass = String.class),
+            @DynamicParameter(name = "description",value = "角色描述",example = "我是小明",dataTypeClass = String.class),
+            @DynamicParameter(name = "sort",value = "角色排序",example = "1",dataTypeClass = Integer.class)
+    }))
+    @PostMapping("/role/updateRole")
+    public Result updateRole(@RequestBody JSONObject param){
+        try {
+            Role role = (Role)ObjectUtil.map2ObjAndCast(param, Role.class);
+            roleMapper.updateById(role);
         }catch (Exception e){
             e.printStackTrace();
             return Result.fail();
@@ -178,4 +206,20 @@ public class IndexController {
         }
         return Result.fail();
     }
+//==================================================================================================================================================================
+    @ApiOperation(value = "通过角色id查询到对应的权限", httpMethod = ConstantUtil.HTTP_GET, notes = "通过角色id查询到对应的权限 ")
+    @ApiImplicitParam(name = "id", value = "角色id（位于请求的URL中）", example = "1",required = true, dataType = "long")
+    @GetMapping(value = "/{id}")
+    public Result<Permisson> get(@PathVariable  long id) {
+        log.info("getPermisson with rolesid: {}", id);
+        try {
+            Permisson permisson = permissonService.getById(id);
+            return Result.success(permisson);
+        } catch (Exception e) {
+            log.error("{}", e);
+            return Result.fail();
+        }
+    }
+
+
 }

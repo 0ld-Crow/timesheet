@@ -26,21 +26,24 @@ import org.springframework.format.annotation.DateTimeFormat;
 public class Project extends BasePo {
 
     @TableId(type = IdType.AUTO)
-    @ApiModelProperty(value = "项目信息表ID")
+    @ApiModelProperty(value = "项目信息表ID",example = "1")
     Long id;
 
-    @ApiModelProperty(value = "项目名称")
+    @ApiModelProperty(value = "项目名称",example = "项目1")
     String name;
 
-    @ApiModelProperty(value = "是否禁用")
+    @ApiModelProperty(value = "是否禁用",example = "0")
     Integer isBan;
 
-    @ApiModelProperty(value = "附加字段")
+    @ApiModelProperty(value = "附加字段",example = "附加字段")
     String attach;
 
-    @ApiModelProperty(value = "备注")
+    @ApiModelProperty(value = "备注",example = "备注")
     String remark;
 
-    @ApiModelProperty(value = "是否删除")
+    @ApiModelProperty(value = "是否删除",example = "0")
     Integer isDelete;
+
+
+
 }
