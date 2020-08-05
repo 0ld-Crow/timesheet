@@ -19,9 +19,7 @@ import java.util.Map;
 @Repository
 public interface MemberMapper extends BaseMapper<Member> {
 
-    /**
-     * 导出会员工时明细
-    **/
+
     @Select({
             "<script>",
             "SELECT",

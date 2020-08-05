@@ -15,7 +15,7 @@ import lombok.NoArgsConstructor;
 @TableName("users")
 public class User extends BasePo{
     @TableId(type = IdType.AUTO)
-    @ApiModelProperty(value = "用户ID",example = "1")
+    @ApiModelProperty(value = "用户ID")
     private Long id;
 
     @ApiModelProperty(value = "用户名称")

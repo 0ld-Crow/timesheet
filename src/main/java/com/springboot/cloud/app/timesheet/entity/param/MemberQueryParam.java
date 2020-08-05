@@ -12,8 +12,6 @@ import java.util.Date;
 /**
  * @ClassName MemberQueryParam
  * @Description 会员信息表 - Param Object
- * @Author cj
- * @Date 2019-11-11
  */
 @Data
 @AllArgsConstructor

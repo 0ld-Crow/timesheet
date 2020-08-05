@@ -11,8 +11,7 @@ import java.math.BigDecimal;
 import java.util.Date;
 
 /**
- * @ClassName SummaryVo
- * @Description 工作记录汇总 View Object
+ * 工作记录汇总
  */
 @Data
 @AllArgsConstructor
@@ -26,10 +25,10 @@ public class SummaryVo extends BaseVo  {
 	Long uId;
 
 	@JsonFormat(pattern = "yyyy-MM-dd", timezone="GMT+8")
-	@ApiModelProperty(value = "工作日期")
+	@ApiModelProperty(value = "工作日期",example = "1")
 	Date workDate;
 
-	@ApiModelProperty(value = "类型：1：:已提交，0：未提交")
+	@ApiModelProperty(value = "类型：1：:已提交，0：未提交",example = "1")
 	int type;
 
 }

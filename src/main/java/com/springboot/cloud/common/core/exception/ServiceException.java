@@ -3,8 +3,6 @@ package com.springboot.cloud.common.core.exception;
 /**
  * @ClassName ServiceException
  * @Description
- * @Author cj
- * @Date 2019/05/30
  */
 public class ServiceException extends BaseException {
 

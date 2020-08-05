@@ -19,10 +19,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-/**
- * @ClassName JobServiceImpl
- * @Description 岗位信息表 - 信息业务层实现
- */
+
 @Service("jobService")
 public class JobServiceImpl extends ServiceImpl<JobMapper, Job>  implements IJobService {
 

@@ -2,12 +2,9 @@ package com.springboot.cloud.app.timesheet.rest;
 
 import com.alibaba.fastjson.JSONObject;
 import com.springboot.cloud.app.timesheet.dao.MemberMapper;
-import com.springboot.cloud.app.timesheet.dao.PermissonMapper;
 import com.springboot.cloud.app.timesheet.dao.RoleMapper;
-import com.springboot.cloud.app.timesheet.entity.po.Job;
 import com.springboot.cloud.app.timesheet.entity.po.Member;
 import com.springboot.cloud.app.timesheet.entity.po.Permisson;
-import com.springboot.cloud.app.timesheet.entity.vo.JobVo;
 import com.springboot.cloud.app.timesheet.service.IIndexService;
 import com.springboot.cloud.app.timesheet.service.IPermissonService;
 import com.springboot.cloud.common.core.entity.po.Role;
@@ -17,24 +14,17 @@ import com.springboot.cloud.common.core.exception.AccountException;
 import com.springboot.cloud.common.core.util.CommonUtil;
 import com.springboot.cloud.common.core.util.ConstantUtil;
 import com.springboot.cloud.common.core.util.ObjectUtil;
-import com.springboot.cloud.enums.roleEnums;
 import io.swagger.annotations.*;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.SecurityUtils;
-import org.apache.shiro.authc.IncorrectCredentialsException;
-import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Objects;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 @RestController
 @Api(tags="【公共接口】")
@@ -118,7 +108,7 @@ public class IndexController {
     @PostMapping("/role/addRole")
     public Result addRole(@RequestBody JSONObject param){
         try {
-            Role role = (Role)ObjectUtil.map2ObjAndCast(param, Role.class);
+            Role role = (Role)ObjectUtil.map2Obj(param, Role.class);
             roleMapper.insert(role);
         }catch (Exception e){
             e.printStackTrace();
@@ -138,7 +128,7 @@ public class IndexController {
     @PostMapping("/role/updateRole")
     public Result updateRole(@RequestBody JSONObject param){
         try {
-            Role role = (Role)ObjectUtil.map2ObjAndCast(param, Role.class);
+            Role role = (Role)ObjectUtil.map2Obj(param, Role.class);
             roleMapper.updateById(role);
         }catch (Exception e){
             e.printStackTrace();
@@ -209,7 +199,7 @@ public class IndexController {
 //==================================================================================================================================================================
     @ApiOperation(value = "通过角色id查询到对应的权限", httpMethod = ConstantUtil.HTTP_GET, notes = "通过角色id查询到对应的权限 ")
     @ApiImplicitParam(name = "id", value = "角色id（位于请求的URL中）", example = "1",required = true, dataType = "long")
-    @GetMapping(value = "/{id}")
+    @GetMapping(value = "/role/{id}")
     public Result<Permisson> get(@PathVariable  long id) {
         log.info("getPermisson with rolesid: {}", id);
         try {

@@ -17,11 +17,7 @@ import java.time.ZonedDateTime;
 import java.util.HashMap;
 import java.util.Map;
 
-/**
- * @ClassName Result<T>
- * @Description
- */
-@ApiModel(value = "返回说明", description = "rest请求的返回模型，所有rest正常都返回该类的对象")
+@ApiModel(value = "返回说明", description = "controller请求的返回模型，所有controller正常都返回该类的对象")
 @Getter
 public class Result<T> {
 
@@ -73,7 +69,6 @@ public class Result<T> {
 
     /**
      * 内部使用，用于构造成功的结果
-     *
      * @param code
      * @param mesg
      * @param data
@@ -87,7 +82,6 @@ public class Result<T> {
 
     /**
      * 快速创建成功结果并返回结果数据
-     *
      * @param data
      * @return Result
      */
@@ -97,7 +91,6 @@ public class Result<T> {
 
     /**
      * 快速创建成功结果
-     *
      * @return Result
      */
     public static Result success() {
@@ -106,7 +99,6 @@ public class Result<T> {
 
     /**
      * 系统异常类没有返回数据
-     *
      * @return Result
      */
     public static Result fail() {
@@ -135,7 +127,6 @@ public class Result<T> {
 
     /**
      * 系统异常类并返回结果数据
-     *
      * @param errorType
      * @param data
      * @return Result
@@ -146,30 +137,17 @@ public class Result<T> {
 
     /**
      * 系统异常类并返回结果数据
-     *failWithCustomerMessage
      * @param errorType
      * @param data
      * @return Result
      */
     public static Result failCus(ErrorType errorType, Object data) {
         Result result = new Result<>(errorType, data);
-//        if(data instanceof String){
-//             result.data = errorType.getMesg();
-//             result.mesg = (String)data;
-//        }else if(data instanceof OAuth2Exception){
-//             result.mesg = errorType.getMesg();
-//             Map dtMap = new HashMap<>();
-//             dtMap.put("error",((OAuth2Exception) data).getOAuth2ErrorCode());
-//             dtMap.put("error_description",errorType.getMesg());
-//             result.data = dtMap;
-//
-//        }
         return result;
     }
 
     /**
      * 系统异常类并返回结果数据
-     *
      * @param errorType
      * @return Result
      */
@@ -179,7 +157,6 @@ public class Result<T> {
 
     /**
      * 系统异常类并返回结果数据
-     *
      * @param data
      * @return Result
      */
@@ -189,7 +166,6 @@ public class Result<T> {
 
     /**
      * 系统异常类并返回警告内容
-     *
      * @param mesg
      * @return Result
      */
@@ -197,23 +173,4 @@ public class Result<T> {
         return new Result<>(WARNINGFUL_CODE, mesg, null);
     }
 
-    /**
-     * 成功code=000000
-     *
-     * @return true/false
-     */
-//    @JsonIgnore
-//    public boolean isSuccess() {
-//        return SUCCESSFUL_CODE.equals(this.code);
-//    }
-
-    /**
-     * 失败
-     *
-     * @return true/false
-     */
-//    @JsonIgnore
-//    public boolean isFail() {
-//        return !isSuccess();
-//    }
 }

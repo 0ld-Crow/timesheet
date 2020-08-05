@@ -11,18 +11,11 @@ import org.springframework.stereotype.Repository;
 import java.util.Date;
 import java.util.List;
 
-/**
- * @ClassName UnfilledMapper
- * @Description 工作未填写表持久层接口
- */
+
 @Mapper
 @Repository
 public interface UnfilledMapper extends BaseMapper<Unfilled> {
-    /**
-     * 获取未汇报清单
-    * @author llc
-    * @Date 2019/11/13
-    **/
+
     @Select({
             "<script>",
             "select ",
@@ -50,11 +43,7 @@ public interface UnfilledMapper extends BaseMapper<Unfilled> {
     })
     public int getUnfillListCount(@Param("param")JSONObject param);
 
-    /**
-     * 获取今天没有汇报的人和项目
-     * @author llc
-     * @Date 2019/11/14
-     **/
+
     @Select({
             "<script>",
             "SELECT",
@@ -75,11 +64,6 @@ public interface UnfilledMapper extends BaseMapper<Unfilled> {
     public List<TodayNoReportPersonVo> getNoReportPerson();
 
 
-    /**
-     * 用户补填汇总后删除记录
-     * @author ljc
-     * @Date 2019/11/28
-     **/
 
     @Update({
             "<script>",

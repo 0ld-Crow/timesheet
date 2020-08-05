@@ -32,10 +32,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import java.util.stream.Collectors;
 
-/**
- * @ClassName UnfilledController
- * @Description 旷工表
- */
+
 @RestController
 @Api(tags="【PC端】旷工模块")
 @Slf4j
@@ -169,7 +166,7 @@ public class UnfilledController {
          return Result.success(ipageRes);
     }
 //==================================================================================================================================================================
-	////还没有进行任何定义的查询
+	////还没有进行任何定义的查询（看看前端需要什么然后进行修改）
 //	@ApiOperation(value = "旷工表 - 无分页列表", httpMethod = ConstantUtil.HTTP_POST,notes ="根据条件搜索模版数据 - 无分页")
 //   @ApiImplicitParams({
 //                @ApiImplicitParam(name = "unfilledQueryForm", value = "unfilled查询参数", required = true, dataType = "unfilledQueryForm"),

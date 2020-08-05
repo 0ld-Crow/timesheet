@@ -7,10 +7,7 @@ import com.springboot.cloud.app.timesheet.entity.po.Permisson;
 import com.springboot.cloud.app.timesheet.service.IPermissonService;
 import org.springframework.stereotype.Service;
 
-/**
- * @ClassName PermissionServiceImpl
- * @Description 权限信息表
- */
+
 @Service("permissonService")
 public class PermissonServiceImpl extends ServiceImpl<PermissonMapper, Permisson> implements IPermissonService {
 

@@ -31,22 +31,25 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-/**
- * @ClassName ProjectServiceImpl
- * @Description 项目信息表 - 信息业务层实现
- */
+
 @Slf4j
 @Service("projectService")
 public class ProjectServiceImpl extends ServiceImpl<ProjectMapper, Project>  implements IProjectService {
     @Autowired
     ProjectMapper projectMapper;
 
+    /**
+     * 查询到某个项目的工时列表
+     **/
     @Override
     public List<ProjectWorkTimeVo> projectWorkTime(JSONObject param) {
         CommonUtil.defaultParam(param);
         return projectMapper.getProjectWorkTime(param);
     }
 
+    /**
+     * 导出所有项目工时统计
+     **/
     @Override
     public void exportAllProjectWorkTime(JSONObject json, HttpServletResponse response) throws Exception{
         String sheetName = "项目工时统计";
@@ -58,6 +61,9 @@ public class ProjectServiceImpl extends ServiceImpl<ProjectMapper, Project>  imp
         PoiExcelUtil.writeToOutput(bais,response,sheetName);
     }
 
+    /**
+     * 按岗位导出工时统计
+     **/
     @Override
     public void exportWorkTimeByPost(JSONObject json, HttpServletResponse response) throws Exception{
         String sheetName = "岗位工时统计";
@@ -70,6 +76,9 @@ public class ProjectServiceImpl extends ServiceImpl<ProjectMapper, Project>  imp
         PoiExcelUtil.writeToOutput(bais,response,sheetName);
     }
 
+    /**
+     * 按人导出工时统计
+     **/
     @Override
     public void exportWorkTimeByPerson(JSONObject json, HttpServletResponse response) throws Exception {
         String sheetName = "人员工时统计";
@@ -82,18 +91,27 @@ public class ProjectServiceImpl extends ServiceImpl<ProjectMapper, Project>  imp
         PoiExcelUtil.writeToOutput(bais,response,sheetName);
     }
 
+    /**
+     * 查询到某个项目的工时列表明细
+     **/
     @Override
     public List<ProjectWorkTimeVo> projectWorkTimeDetail(JSONObject param) {
         CommonUtil.defaultParam(param);
         return projectMapper.getWorkTimeByPostOrPerson(param);
     }
 
+    /**
+     * 批量删除
+     **/
     @Override
     public void batchDelete(JSONObject param) {
         String ids = param.getString("ids");
         projectMapper.batchDelete(ids);
     }
 
+    /**
+     * 查询项目列表
+     **/
     @Override
     public Map<String,Object> getProjectList(JSONObject param) {
         QueryWrapper<Project> wrapper = queryProject(param);
@@ -110,6 +128,9 @@ public class ProjectServiceImpl extends ServiceImpl<ProjectMapper, Project>  imp
         return projectMapper.selectList(wrapper);
     }
 
+    /**
+     * 分页查询项目列表
+     **/
     @Override
     public Map<String,Object> getProjectListByPage(JSONObject param) {
         CommonUtil.defaultParam(param);

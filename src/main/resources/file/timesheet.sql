@@ -11,7 +11,6 @@
  Target Server Version : 50721
  File Encoding         : 65001
 
- Date: 11/11/2019 16:26:39
 */
 
 SET NAMES utf8mb4;

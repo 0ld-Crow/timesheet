@@ -16,34 +16,59 @@ import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 /**
- * 类型转换工具类
+ * ClassName ObjectUtil
+ * @Description 类型转换工具类
  */
 public class ObjectUtil {
 
     /**
-    map：{                                           obj:Person类：{
-            "name":"小明",                                       "name":"小明",
-            "sex":"男",                                          "sex":"男",
-            "age":"18",                 ---->                    "age":"18",
-            "phone":"123456"                                    "phone":"123456"
-         }                                                        }
-
+     map：{                                           obj:Person类：{
+     "name":"小明",                                       "name":"小明",
+     "sex":"男",                                          "sex":"男",
+     "age":"18",                 ---->                    "age":"18",
+     "phone":"123456"                                    "phone":"123456"
+     }
      **/
     public static Object map2Obj(Map<String,Object> map, Class<?> clz) throws Exception{
         //利用反射机制来调用空构造方法新建clz类的一个实例化对象
-       Object obj = clz.newInstance();
-       //获取obj对象中的所有定义了的属性字段
-       Field[] declaredFields = obj.getClass().getDeclaredFields();
-       for(Field field:declaredFields){
+        Object obj = clz.newInstance();
+        //获取obj对象中的所有定义了的属性字段
+        Field[] declaredFields = obj.getClass().getDeclaredFields();
+        for(Field field:declaredFields){
+            //如果map中没有obj中的某个字段的话就跳过
+            if (!map.containsKey(field.getName())){
+                continue;
+            }
             //获取该字段前的修饰符
             int mod = field.getModifiers();
-            //如果修饰符为static或final则不用理
-            if(Modifier.isStatic(mod) || Modifier.isFinal(mod)){continue;}
+            //如果字段的修饰符为static或final则跳过
+            if(Modifier.isStatic(mod) || Modifier.isFinal(mod)){
+                continue;
+            }
             //当字段被private修饰的时候如果accessible为false的话无法访问反射访问该字段
             field.setAccessible(true);
-            field.set(obj, map.get(field.getName()));
-       }
-       return obj;
+            //获取该字段的类型
+            Class clzz = field.getType();
+            //不同类型的字段有不同的处理方法
+            if (clzz == long.class || clzz == Long.class){
+                field.set(obj, Long.parseLong(map.get(field.getName()).toString()));
+            }else if (clzz == int.class || clzz == Integer.class){
+                field.set(obj, Integer.parseInt(map.get(field.getName()).toString()));
+            }else if (clzz == Date.class){
+                DateTimeFormat dtf = field.getAnnotation(DateTimeFormat.class);
+                String pattern = "yyyy-MM-dd";
+                if (dtf != null){
+                    pattern = dtf.pattern();
+                }
+                SimpleDateFormat sdf = new SimpleDateFormat(pattern);
+                field.set(obj,sdf.parse(map.get(field.getName()).toString()));
+            }else if(clzz == BigDecimal.class) {
+                field.set(obj,new BigDecimal(map.get(field.getName()).toString()));
+            } else {
+                field.set(obj, map.get(field.getName()));
+            }
+        }
+        return obj;
     }
 
     /**
@@ -117,40 +142,5 @@ public class ObjectUtil {
         return list;
     }
 
-    /**
-     * map to object 类型转换
-    **/
-    public static Object map2ObjAndCast(Map<String,Object> map, Class<?> clz) throws Exception{
-        Object obj = clz.newInstance();
-        Field[] declaredFields = obj.getClass().getDeclaredFields();
-        for(Field field:declaredFields){
-            if (!map.containsKey(field.getName())){
-                continue;
-            }
-            int mod = field.getModifiers();
-            if(Modifier.isStatic(mod) || Modifier.isFinal(mod)){
-                continue;
-            }
-            field.setAccessible(true);
-            Class clzz = field.getType();
-            if (clzz == long.class || clzz == Long.class){
-                field.set(obj, Long.parseLong(map.get(field.getName()).toString()));
-            }else if (clzz == int.class || clzz == Integer.class){
-                field.set(obj, Integer.parseInt(map.get(field.getName()).toString()));
-            }else if (clzz == Date.class){
-                DateTimeFormat dtf = field.getAnnotation(DateTimeFormat.class);
-                String pattern = "yyyy-MM-dd";
-                if (dtf != null){
-                    pattern = dtf.pattern();
-                }
-                SimpleDateFormat sdf = new SimpleDateFormat(pattern);
-                field.set(obj,sdf.parse(map.get(field.getName()).toString()));
-            }else if(clzz == BigDecimal.class) {
-                field.set(obj,new BigDecimal(map.get(field.getName()).toString()));
-            } else {
-                field.set(obj, map.get(field.getName()));
-            }
-        }
-        return obj;
-    }
+
 }

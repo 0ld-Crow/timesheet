@@ -18,10 +18,7 @@ import java.util.List;
 @Repository
 public interface ProjectMapper extends BaseMapper<Project> {
 
-    /**
-     * 查询到某个项目的工时列表
-     * 统计的截止时间为当前日期。禁用的项目截止日期为最后一个提交的日期
-    **/
+
     @Select({
             "<script>",
             "SELECT",
@@ -42,9 +39,6 @@ public interface ProjectMapper extends BaseMapper<Project> {
     })
     public List<ProjectWorkTimeVo> getProjectWorkTime(@Param("param")JSONObject param);
 
-    /**
-     * 人员或岗位工时统计
-    **/
     @Select({
             "<script>",
             "SELECT",

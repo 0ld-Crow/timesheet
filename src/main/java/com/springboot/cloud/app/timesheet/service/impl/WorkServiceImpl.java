@@ -17,10 +17,8 @@ import com.springboot.cloud.app.timesheet.entity.po.Work;
 import com.springboot.cloud.app.timesheet.entity.vo.SummaryVo;
 import com.springboot.cloud.app.timesheet.entity.vo.WorkVo;
 import com.springboot.cloud.app.timesheet.service.IWorkService;
-import com.springboot.cloud.common.core.entity.vo.Result;
 import com.springboot.cloud.common.core.util.CommonUtil;
 import com.springboot.cloud.common.core.util.ObjectUtil;
-import com.sun.org.apache.bcel.internal.generic.NEW;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,12 +30,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-/**
- * @ClassName WorkServiceImpl
- * @Description 工作记录表 - 信息业务层实现
- * @Author cj
- * @Date: 2019-11-11
- */
+
 @Service("workService")
 public class WorkServiceImpl extends ServiceImpl<WorkMapper, Work>  implements IWorkService {
     @Autowired
@@ -48,16 +41,20 @@ public class WorkServiceImpl extends ServiceImpl<WorkMapper, Work>  implements I
     ProjectMapper projectMapper;
     @Autowired
     UnfilledMapper unfilledMapper;
-
+    /**
+     * 批量删除工作记录表
+     **/
     @Override
     public int batchDelete(JSONObject param) {
         String id = param.getString("ids");
         return workMapper.batchDelete(id);
     }
-
+    /**
+     * 新增1个工作记录表
+     **/
     @Override
     public boolean saveWork(JSONObject param) throws Exception {
-        Work work = (Work) ObjectUtil.map2ObjAndCast(param, Work.class);
+        Work work = (Work) ObjectUtil.map2Obj(param, Work.class);
         work.setIsDelete(0);
         work.setCreatedBy(CommonUtil.getCurrentUserId());
         work.setUpdatedBy(CommonUtil.getCurrentUserId());
@@ -76,7 +73,7 @@ public class WorkServiceImpl extends ServiceImpl<WorkMapper, Work>  implements I
         for(int i=0;i<param.size();i++){
             //3、把里面的对象转化为JSONObject
             JSONObject job = param.getJSONObject(i);
-            Work work = (Work) ObjectUtil.map2ObjAndCast(job,Work.class);
+            Work work = (Work) ObjectUtil.map2Obj(job,Work.class);
             Long uid = CommonUtil.getLoginUserId();
             work.setUId(uid);
             work.setIsDelete(0);
@@ -108,7 +105,7 @@ public class WorkServiceImpl extends ServiceImpl<WorkMapper, Work>  implements I
         for(int i=0;i<param.size();i++){
             //3、把里面的对象转化为JSONObject
             JSONObject job = param.getJSONObject(i);
-            Work work = (Work) ObjectUtil.map2ObjAndCast(job,Work.class);
+            Work work = (Work) ObjectUtil.map2Obj(job,Work.class);
             work.setUpdatedTime(new Date());
             res =  workMapper.updateById(work);
             if(res > 0){
@@ -148,7 +145,6 @@ public class WorkServiceImpl extends ServiceImpl<WorkMapper, Work>  implements I
 
     /**
      * 获取过去第几天的日期
-     *
      * @param past
      * @return
      */
@@ -160,14 +156,18 @@ public class WorkServiceImpl extends ServiceImpl<WorkMapper, Work>  implements I
         String result = format.format(today);
         return result;
     }
-
+    /**
+     * 查询工作列表
+     **/
     @Override
     public Map<String,Object> getWorkList(JSONObject param) {
         QueryWrapper<Work> wrapper = queryWork(param);
         int count = workMapper.selectCount(wrapper);
         return CommonUtil.wrapPageList(putMemberName(workMapper.selectList(wrapper)),count);
     }
-
+    /**
+     * 分页查询工作列表
+     **/
     @Override
     public Map<String,Object> getWorkListByPage(JSONObject param) {
         CommonUtil.defaultParam(param);
@@ -177,7 +177,9 @@ public class WorkServiceImpl extends ServiceImpl<WorkMapper, Work>  implements I
         int count = workMapper.selectCount(wrapper);
         return CommonUtil.wrapPageList(putMemberName(page.getRecords()),count);
     }
-
+    /**
+     * 通过模糊查询（日期，员工姓名，项目名称）查询work列表
+     **/
     @Override
     public Map<String, Object> getWorkListByDateUsernameProjectname(JSONObject param) {
 
@@ -220,7 +222,7 @@ public class WorkServiceImpl extends ServiceImpl<WorkMapper, Work>  implements I
         return CommonUtil.wrapPageList(putMemberName(page.getRecords()),count);
     }
 
-    public List<WorkVo> putMemberName(List<Work> works){
+    private List<WorkVo> putMemberName(List<Work> works){
         List<WorkVo> workVos = new ArrayList<>();
         for (Work work : works) {
             WorkVo workVo = new WorkVo();

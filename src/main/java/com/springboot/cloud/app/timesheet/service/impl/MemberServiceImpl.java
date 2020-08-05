@@ -7,7 +7,6 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.springboot.cloud.app.timesheet.dao.MemberMapper;
-import com.springboot.cloud.app.timesheet.dao.UnfilledMapper;
 import com.springboot.cloud.app.timesheet.entity.form.MemberForm;
 import com.springboot.cloud.app.timesheet.entity.po.Member;
 import com.springboot.cloud.app.timesheet.entity.vo.MemberVo;
@@ -17,14 +16,9 @@ import com.springboot.cloud.app.timesheet.service.IIndexService;
 import com.springboot.cloud.app.timesheet.service.IMemberService;
 import com.springboot.cloud.app.timesheet.service.IUserService;
 import com.springboot.cloud.common.core.entity.po.Role;
-import com.springboot.cloud.common.core.entity.po.User;
-import com.springboot.cloud.common.core.exception.AccountException;
-import com.springboot.cloud.common.core.exception.ErrorType;
-import com.springboot.cloud.common.core.exception.SystemErrorType;
 import com.springboot.cloud.common.core.util.CommonUtil;
 import com.springboot.cloud.common.core.util.ObjectUtil;
 import com.springboot.cloud.common.core.util.PoiExcelUtil;
-import com.springboot.cloud.enums.roleEnums;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,17 +26,11 @@ import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.ByteArrayInputStream;
-import java.io.IOException;
-import java.io.OutputStream;
-import java.net.URLEncoder;
 import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-/**
- * @ClassName MemberServiceImpl
- * @Description 会员信息表 - 信息业务层实现
- */
+
 @Slf4j
 @Service("memberService")
 public class MemberServiceImpl extends ServiceImpl<MemberMapper, Member>  implements IMemberService {
@@ -58,7 +46,7 @@ public class MemberServiceImpl extends ServiceImpl<MemberMapper, Member>  implem
     public IUserService userService;
 
     /**
-     * 导出会员工时明细
+     * 导出员工工时明细
      **/
     @Override
     public void exportPersonProjectDetail(JSONObject json,HttpServletResponse response) throws Exception{
@@ -72,7 +60,7 @@ public class MemberServiceImpl extends ServiceImpl<MemberMapper, Member>  implem
     }
 
     /**
-     * 新增一个会员
+     * 新增一个员工
      **/
     @Override
     public boolean savePerson(MemberForm memberForm) {
@@ -100,7 +88,7 @@ public class MemberServiceImpl extends ServiceImpl<MemberMapper, Member>  implem
     }
 
     /**
-     * 查询会员列表
+     * 查询员工列表
      **/
     @Override
     public Map<String,Object> getMemberList(JSONObject param) {
@@ -110,7 +98,7 @@ public class MemberServiceImpl extends ServiceImpl<MemberMapper, Member>  implem
     }
 
     /**
-     * 分页查询会员列表
+     * 分页查询员工列表
      **/
     @Override
     public Map<String,Object> getMemberListByPage(JSONObject param) {
@@ -145,7 +133,7 @@ public class MemberServiceImpl extends ServiceImpl<MemberMapper, Member>  implem
     }
 
     /**
-     * 批量删除用户
+     * 批量删除员工
      **/
     @Override
     public int batchDelete(JSONObject param) {
@@ -154,7 +142,9 @@ public class MemberServiceImpl extends ServiceImpl<MemberMapper, Member>  implem
     }
 
 
-
+    /**
+     * 获取员工列表
+     **/
     @Override
     public Map<String,Object> getUserList(JSONObject param) {
         QueryWrapper<Member> wrapper = queryProject(param);
@@ -184,12 +174,12 @@ public class MemberServiceImpl extends ServiceImpl<MemberMapper, Member>  implem
     }
 
     /**
-     * 更新一个用户的信息
+     * 更新一个员工的信息
      **/
     @Override
     public boolean update(JSONObject param) {
         try {
-            Member member = (Member) ObjectUtil.map2ObjAndCast(param,Member.class);
+            Member member = (Member) ObjectUtil.map2Obj(param,Member.class);
             memberMapper.updateById(member);
         }catch (Exception e){
             e.printStackTrace();
@@ -198,7 +188,7 @@ public class MemberServiceImpl extends ServiceImpl<MemberMapper, Member>  implem
     }
 
     /**
-     * 导出用户的账号信息
+     * 导出员工的账号信息
      **/
     @Override
     public void exportMember(JSONObject param,HttpServletResponse response)throws Exception {
@@ -211,7 +201,7 @@ public class MemberServiceImpl extends ServiceImpl<MemberMapper, Member>  implem
         PoiExcelUtil.writeToOutput(bais,response,sheetName);
     }
 
-    public List<MemberVo> memberToVo(List<Member> members){
+    private List<MemberVo> memberToVo(List<Member> members){
         List<Role> roles = indexService.getRoleList();
         List<MemberVo> memberVos = members.stream().map(m -> {
             MemberVo memberVo = new MemberVo();

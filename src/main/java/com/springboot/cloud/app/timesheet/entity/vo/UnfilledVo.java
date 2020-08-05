@@ -5,7 +5,7 @@ import java.util.Date;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.springboot.cloud.common.core.entity.vo.BaseVo;
-import com.springboot.cloud.common.core.aspect.Dict;
+
 import lombok.Data;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.EqualsAndHashCode;
@@ -14,8 +14,7 @@ import lombok.NoArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 
 /**
- * @ClassName UnfilledVo
- * @Description 未填写的工作记录表
+ *  当天未填写工作记录表的人的unfilled表
  */
 @Data
 @AllArgsConstructor
@@ -35,9 +34,9 @@ public class UnfilledVo extends BaseVo {
     @ApiModelProperty(value = "工作日期")
     Date workDate;
 
-    @ApiModelProperty(value = "附加字段")
+    @ApiModelProperty(value = "附加字段",example = "附加字段")
     String attach;
 
-    @ApiModelProperty(value = "备注")
+    @ApiModelProperty(value = "备注",example = "备注")
     String remark;
 }

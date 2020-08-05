@@ -12,10 +12,7 @@ import org.springframework.stereotype.Repository;
 import java.util.Date;
 import java.util.List;
 
-/**
- * @ClassName WorkMapper
- * @Description 工作记录表持久层接口
- */
+
 @Mapper
 @Repository
 public interface WorkMapper extends BaseMapper<Work> {

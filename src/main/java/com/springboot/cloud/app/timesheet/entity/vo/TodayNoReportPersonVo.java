@@ -16,6 +16,6 @@ public class TodayNoReportPersonVo {
     @ApiModelProperty(value = "人员id",example = "1")
     Long memberId;
 
-    @ApiModelProperty(value = "姓名")
+    @ApiModelProperty(value = "姓名",example = "小明")
     String realName;
 }

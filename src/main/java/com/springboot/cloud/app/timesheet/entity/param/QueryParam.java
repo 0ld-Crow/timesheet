@@ -9,8 +9,8 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class QueryParam {
-    @ApiModelProperty(value = "页数")
+    @ApiModelProperty(value = "页数",example = "100")
     Integer pageNum;
-    @ApiModelProperty(value = "一页大小")
+    @ApiModelProperty(value = "一页大小",example = "15")
     Integer pageSize;
 }

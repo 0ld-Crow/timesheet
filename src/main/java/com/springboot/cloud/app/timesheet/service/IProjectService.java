@@ -10,10 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 import java.util.Map;
 
-/**
- * @ClassName IProjectService
- * @Description 项目信息表 - 抽象信息业务层接口
- */
+
 public interface IProjectService extends IService<Project>{
     /**
      * 查询到某个项目的工时列表

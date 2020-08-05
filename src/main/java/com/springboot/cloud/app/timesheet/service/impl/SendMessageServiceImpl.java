@@ -22,8 +22,6 @@ import java.net.URL;
 /**
  * @ClassName SendMessageServiceImpl
  * @Description 发现企业微信信息通知
- * @Author ljc
- * @Date: 2019-11-27
  */
 @Service("sendMessageService")
 public class SendMessageServiceImpl implements ISendMessageService {
@@ -38,6 +36,7 @@ public class SendMessageServiceImpl implements ISendMessageService {
 
 
     //发送信息
+    @Override
     public String sendMessage() throws Exception {
         JSONObject insertdata = new JSONObject();
         JSONObject content = new JSONObject();
@@ -52,6 +51,7 @@ public class SendMessageServiceImpl implements ISendMessageService {
     }
 
     //发送信息
+    @Override
     public String sendWxMessage(JSONObject outputStr) throws Exception {
         Byte type = new Byte("0");
         String access_token = accessTokenService.getToken(type);

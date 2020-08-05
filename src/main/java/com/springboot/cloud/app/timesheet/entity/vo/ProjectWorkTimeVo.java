@@ -22,29 +22,29 @@ public class ProjectWorkTimeVo extends BaseVo {
     @ApiModelProperty(value = "项目id",example = "1")
     Long pId;
 
-    @ApiModelProperty(value = "项目名称")
+    @ApiModelProperty(value = "项目名称",example = "商城项目")
     String projectName;
 
     @DateTimeFormat(pattern="yyyy-MM-dd")
     @JsonFormat(pattern = "yyyy-MM-dd", timezone="GMT+8")
-    @ApiModelProperty(value = "起始日期")
+    @ApiModelProperty(value = "起始日期",example = "2020-11-11")
     Date startDate;
 
     @DateTimeFormat(pattern="yyyy-MM-dd")
     @JsonFormat(pattern = "yyyy-MM-dd", timezone="GMT+8")
-    @ApiModelProperty(value = "截止日期")
+    @ApiModelProperty(value = "截止日期",example = "2020-11-11")
     Date endDate;
 
-    @ApiModelProperty(value = "工时总计")
+    @ApiModelProperty(value = "工时总计",example = "5")
     BigDecimal totalWorkDate;
 
-    @ApiModelProperty(value = "人日总计")
+    @ApiModelProperty(value = "人日总计",example = "10")
     BigDecimal dayPerOne;
 
-    @ApiModelProperty(value = "人员名称")
+    @ApiModelProperty(value = "人员名称",example = "小明")
     String personName;
 
-    @ApiModelProperty(value = "岗位名称")
+    @ApiModelProperty(value = "岗位名称",example = "后端开发")
     String postName;
 
 

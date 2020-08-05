@@ -39,7 +39,7 @@ public class BaseForm<T extends BasePo> {
     private Date updatedTime = Date.from(ZonedDateTime.now().toInstant());
 
     /**
-     * From转化为Po，进行后续业务处理
+     * Form转化为Po，进行后续业务处理
      *
      * @param clazz
      * @return

@@ -14,7 +14,7 @@ import lombok.NoArgsConstructor;
 @TableName("t_roles")
 public class Role extends BasePo {
     @TableId(type = IdType.AUTO)
-    @ApiModelProperty(value = "角色id",example = "1")
+    @ApiModelProperty(value = "角色id")
     private Long id;
     @ApiModelProperty(value = "角色编码")
     private String code;
@@ -22,10 +22,8 @@ public class Role extends BasePo {
     private String name;
     @ApiModelProperty(value = "描述")
     private String description;
-//    private Boolean status;
     @ApiModelProperty(value = "排序")
     private Integer sort;
-//    private String icon;
     @ApiModelProperty(value = "是否删除")
     private Integer isDelete;
 }

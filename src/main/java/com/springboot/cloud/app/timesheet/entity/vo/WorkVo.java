@@ -7,7 +7,7 @@ import java.util.Date;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.springboot.cloud.app.timesheet.entity.po.Member;
 import com.springboot.cloud.common.core.entity.vo.BaseVo;
-import com.springboot.cloud.common.core.aspect.Dict;
+
 import lombok.Data;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.EqualsAndHashCode;
@@ -38,8 +38,7 @@ import org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHan
 import javax.servlet.http.HttpServlet;
 
 /**
- * @ClassName WorkVo
- * @Description 工作记录表 View Object
+ * 工作记录表
  */
 @Data
 @AllArgsConstructor
@@ -52,23 +51,23 @@ public class WorkVo extends BaseVo  {
 	@ApiModelProperty(value = "项目ID",example = "1")
 	Long pId;
 
-	@ApiModelProperty(value = "项目名称")
+	@ApiModelProperty(value = "项目名称",example = "商城项目")
 	String projectName;
 
 	@ApiModelProperty(value = "用户ID",example = "1")
 	Long uId;
 
-	@ApiModelProperty(value = "用户名称")
+	@ApiModelProperty(value = "用户名称",example = "明哥")
 	String name;
 
 	@JsonFormat(pattern = "yyyy-MM-dd", timezone="GMT+8")
-	@ApiModelProperty(value = "工作日期")
+	@ApiModelProperty(value = "工作日期",example = "2020-11-11")
 	Date workDate;
 
-	@ApiModelProperty(value = "工作时长")
+	@ApiModelProperty(value = "工作时长",example = "5")
 	BigDecimal hourTime;
 
-	@ApiModelProperty(value = "工作描述")
+	@ApiModelProperty(value = "工作描述",example = "工作描述")
 	String description;
 
 }

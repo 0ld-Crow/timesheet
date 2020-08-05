@@ -22,8 +22,6 @@ import java.net.URL;
 /**
  * @ClassName WorkServiceImpl
  * @Description 获取企业微信部门列表
- * @Author ljc
- * @Date: 2019-11-25
  */
 @Service("departmentService")
 public class DepartmentServiceImpl implements IDepartmentService {

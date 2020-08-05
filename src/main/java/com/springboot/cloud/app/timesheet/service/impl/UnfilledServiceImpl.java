@@ -28,8 +28,6 @@ import java.util.stream.Collectors;
 /**
  * @ClassName UnfilledServiceImpl
  * @Description 工作未填写表 - 信息业务层实现
- * @Author cj
- * @Date: 2019-11-11
  */
 @Slf4j
 @Service("unfilledService")
@@ -37,6 +35,9 @@ public class UnfilledServiceImpl extends ServiceImpl<UnfilledMapper, Unfilled>  
     @Autowired
     UnfilledMapper unfilledMapper;
 
+    /**
+     * 人员未汇报清单
+     **/
     @Override
     public Map<String,Object> getPersonUnreportList(JSONObject json) {
         CommonUtil.defaultParam(json);
@@ -44,6 +45,9 @@ public class UnfilledServiceImpl extends ServiceImpl<UnfilledMapper, Unfilled>  
         return CommonUtil.wrapPageList(unfilledMapper.getUnfillList(json),count);
     }
 
+    /**
+     * 导出人员未汇报清单列表
+     **/
     @Override
     public void exportPersonUnreportList(JSONObject json, HttpServletResponse response) throws Exception{
         String sheetName = "未汇报清单";
@@ -55,6 +59,9 @@ public class UnfilledServiceImpl extends ServiceImpl<UnfilledMapper, Unfilled>  
         PoiExcelUtil.writeToOutput(bais,response,sheetName);
     }
 
+    /**
+     * 批量删除未汇报清单
+     **/
     @Override
     public void batchDeleteUnreport(JSONObject json) {
         String id = json.getString("ids");
@@ -68,6 +75,9 @@ public class UnfilledServiceImpl extends ServiceImpl<UnfilledMapper, Unfilled>  
         }
     }
 
+    /**
+     * 检查今天没有提交报告的人
+     **/
     @Override
     public void updateTodayNoReport() {
         List<TodayNoReportPersonVo> todayNoReportPersonVos = unfilledMapper.getNoReportPerson();

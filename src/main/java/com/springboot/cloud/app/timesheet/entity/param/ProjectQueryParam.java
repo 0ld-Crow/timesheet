@@ -12,31 +12,24 @@ import java.util.Date;
 /**
  * @ClassName ProjectQueryParam
  * @Description 项目信息表 - Param Object
- * @Author cj
- * @Date 2019-11-11
  */
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 public class ProjectQueryParam extends BaseParam {
 
-    /**主键*/
+
     @ApiModelProperty(value = "主键id",example = "1")
     private Long id;
-    /**项目名称*/
-    @ApiModelProperty(value = "项目名称")
+    @ApiModelProperty(value = "项目名称",example = "商城项目")
     private String name;
-    /**是否禁用（0:否|1:是）*/
-    @ApiModelProperty(value = "是否禁用")
+    @ApiModelProperty(value = "是否禁用（0:否|1:是）",example = "0")
     private Integer isBan;
-    /**附加字段*/
-    @ApiModelProperty(value = "附加字段")
+    @ApiModelProperty(value = "附加字段",example = "附加字段")
     private String attach;
-    /**备注*/
-    @ApiModelProperty(value = "备注")
+    @ApiModelProperty(value = "备注",example = "备注")
     private String remark;
-    /**是否删除（0:否|1:是）*/
-    @ApiModelProperty(value = "是否删除")
+    @ApiModelProperty(value = "是否删除（0:否|1:是）",example = "0")
     private Integer isDelete;
 
 }

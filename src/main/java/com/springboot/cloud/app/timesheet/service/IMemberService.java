@@ -10,51 +10,48 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 import java.util.Map;
 
-/**
- * @ClassName IMemberService
- * @Description 用户信息表 - 抽象信息业务层接口
- */
+
 public interface IMemberService extends IService<Member>{
 
     /**
-     * 导出会用户时明细
+     * 导出会员工时明细
     **/
     public void exportPersonProjectDetail(JSONObject json, HttpServletResponse response) throws Exception;
 
     /**
-     * 新增一个用户
+     * 新增一个员工
     **/
     public boolean savePerson(MemberForm memberForm);
 
     /**
-     * 查询用户列表
+     * 查询员工列表
      **/
     public Map<String,Object> getMemberList(JSONObject param);
 
     /**
-     * 分页查询用户列表
+     * 分页查询员工列表
      **/
     public Map<String,Object> getMemberListByPage(JSONObject param);
 
     /**
-     * 批量删除用户
+     * 批量删除员工
     **/
     public int batchDelete(JSONObject param);
 
 
     /**
-     * 获取用户列表
+     * 获取员工列表
     **/
     public Map<String,Object> getUserList(JSONObject param);
 
 
     /**
-     * 更新一个用户的信息
+     * 更新一个员工的信息
     **/
     public boolean update(JSONObject param);
 
     /**
-     * 导出用户的账号信息
+     * 导出员工的账号信息
     **/
     public void exportMember(JSONObject param,HttpServletResponse response)throws Exception;
 

@@ -18,16 +18,17 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
-/**
- * @ClassName IWorkService
- * @Description 工作记录表 - 抽象信息业务层接口
- * @Author cj
- * @Date: 2019-11-11
- */
+
 public interface IWorkService extends IService<Work>{
 
+    /**
+     * 批量删除工作记录表
+     **/
     public int batchDelete(JSONObject param);
 
+    /**
+     * 新增1个工作记录表
+     **/
     public boolean saveWork(JSONObject param) throws Exception;
 
 

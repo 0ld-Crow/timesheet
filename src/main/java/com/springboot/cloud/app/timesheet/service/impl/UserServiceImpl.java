@@ -22,8 +22,6 @@ import java.net.URL;
 /**
  * @ClassName UserServiceImpl
  * @Description 获取企业微信部门成员详情
- * @Author ljc
- * @Date: 2019-11-25
  */
 @Service("userService")
 public class UserServiceImpl implements IUserService {
@@ -39,6 +37,7 @@ public class UserServiceImpl implements IUserService {
     /**
      * 获取部门列表
      * */
+    @Override
     public JSONArray getUserList(String departmentId) throws Exception {
         Byte type = new Byte("1");
         String access_token = accessTokenService.getToken(type);

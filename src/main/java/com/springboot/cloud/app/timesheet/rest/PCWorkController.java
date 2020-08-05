@@ -33,10 +33,7 @@ import javax.validation.Valid;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-/**
- * @ClassName WorkController
- * @Description 【PC端】工作记录表模块
- */
+
 @RestController
 @Api(tags="【PC端】工作记录表模块")
 @Slf4j
@@ -143,46 +140,9 @@ public class PCWorkController {
 			e.printStackTrace();
 			return Result.fail();
 		}
-
-
-//
-//
-//         if(workQueryForm == null){
-//             workQueryForm = new WorkQueryForm();
-//         }
-//         Page<Work> page = new Page<Work>(pageNum,pageSize);
-////         page.setSearchCount(true);
-//         WorkQueryParam workQueryParam = workQueryForm.toParam(WorkQueryParam.class);
-//         QueryWrapper queryWrapper = new QueryWrapper();
-//         if(begaintime !=null && endtime!=null){
-//			 queryWrapper.between("workDate",begaintime,endtime);
-//		 }
-//         if(userId!=null){
-//         	queryWrapper.like("u",userId);
-//		 }
-//
-//
-//
-//
-//
-//
-//
-//
-//         IPage<Work> ipage = workService.page(page,queryWrapper);
-//         IPage<WorkVo> ipageRes = new Page<WorkVo>();
-//         BeanUtils.copyProperties(ipage,ipageRes);
-//         List<Work> works = ipage.getRecords();
-//         List<WorkVo> workVos = works.stream().map(work -> {
-//         	WorkVo workVo = new WorkVo();
-//         	BeanUtils.copyProperties(work,workVo);
-//         	return workVo;
-//         }).collect(Collectors.toList());
-//         ipageRes.setRecords(workVos);
-//         return Result.success(ipageRes);
     }
-
-
-    //没有进行任何定义的查询
+	//==================================================================================================================================================================
+	//没有进行任何定义的查询（看看前端需要什么然后进行修改）
 //   @ApiOperation(value = "工作记录表 - 无分页列表", httpMethod = ConstantUtil.HTTP_POST,notes ="根据条件搜索模版数据 - 无分页")
 //   @ApiImplicitParams({
 //                @ApiImplicitParam(name = "workQueryForm", value = "work查询参数", required = true, dataType = "workQueryForm"),
@@ -261,11 +221,4 @@ public class PCWorkController {
 			return Result.fail();
 		}
 	}
-
-
-
-
-
-
-
 }

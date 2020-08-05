@@ -6,11 +6,7 @@ import com.springboot.cloud.app.timesheet.entity.po.Job;
 
 import java.util.Map;
 
-/**
- * @ClassName IJobService
- * @Description 岗位信息表 - 抽象信息业务层接口
 
- */
 public interface IJobService extends IService<Job>{
 
     /**

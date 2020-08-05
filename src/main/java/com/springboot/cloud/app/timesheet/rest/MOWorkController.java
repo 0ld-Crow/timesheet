@@ -30,10 +30,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
-/**
- * @ClassName WorkController
- * @Description 【移动端】工作记录表模块
- */
+
 @RestController
 @Api(tags="【移动端】工作记录表模块")
 @Slf4j

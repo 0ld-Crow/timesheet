@@ -18,18 +18,18 @@ import java.util.Date;
 public class PersonWorkTimeDetailVo {
 
     @JsonFormat(pattern = "yyyy-MM-dd", timezone="GMT+8")
-    @ApiModelProperty(value = "工作日期")
+    @ApiModelProperty(value = "工作日期",example = "2020-11-11")
     Date workDate;
 
-    @ApiModelProperty(value = "人员名字")
+    @ApiModelProperty(value = "人员名字",example = "小明")
     String realName;
 
-    @ApiModelProperty(value = "项目名称")
+    @ApiModelProperty(value = "项目名称",example = "商城项目")
     String projectName;
 
-    @ApiModelProperty(value = "工作工时")
+    @ApiModelProperty(value = "工作工时",example = "5")
     BigDecimal hourTime;
 
-    @ApiModelProperty(value = "描述")
+    @ApiModelProperty(value = "描述",example = "描述")
     String description;
 }
